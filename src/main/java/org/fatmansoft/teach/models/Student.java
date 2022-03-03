@@ -24,6 +24,8 @@ public class Student {
     private Integer age;
     private Date birthday;
 
+    private String phone;
+
     public Integer getId() {
         return id;
     }
@@ -70,5 +72,13 @@ public class Student {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

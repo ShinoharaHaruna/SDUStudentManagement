@@ -57,6 +57,7 @@ public class TeachController {
             }
             m.put("age",s.getAge());
             m.put("birthday", DateTimeTool.parseDateTime(s.getBirthday(),"yyyy-MM-dd"));  //时间格式转换字符串
+            m.put("phone", s.getPhone());
             dataList.add(m);
         }
         return dataList;
@@ -102,6 +103,7 @@ public class TeachController {
             form.put("sex",s.getSex());  //这里不需要转换
             form.put("age",s.getAge());
             form.put("birthday", DateTimeTool.parseDateTime(s.getBirthday(),"yyyy-MM-dd")); //这里需要转换为字符串
+            form.put("phone", s.getPhone());
         }
         return CommonMethod.getReturnData(form); //这里回传包含学生信息的Map对象
     }
@@ -119,6 +121,7 @@ public class TeachController {
         String sex = CommonMethod.getString(form,"sex");
         Integer age = CommonMethod.getInteger(form,"age");
         Date birthday = CommonMethod.getDate(form,"birthday");
+        String phone = CommonMethod.getString(form, "phone");
         Student s= null;
         Optional<Student> op;
         if(id != null) {
@@ -141,6 +144,7 @@ public class TeachController {
         s.setSex(sex);
         s.setAge(age);
         s.setBirthday(birthday);
+        s.setPhone(phone);
         studentRepository.save(s);  //新建和修改都调用save方法
         return CommonMethod.getReturnData(s.getId());  // 将记录的id返回前端
     }
