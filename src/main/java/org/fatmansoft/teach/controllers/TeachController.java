@@ -58,6 +58,11 @@ public class TeachController {
             m.put("age",s.getAge());
             m.put("birthday", DateTimeTool.parseDateTime(s.getBirthday(),"yyyy-MM-dd"));  //时间格式转换字符串
             m.put("phone", s.getPhone());
+            // 测试 GPA 数据
+            // 为了输出保留两位小数，虽然写的有点麻烦但是能跑就行
+            if (s.getGPA() == 0)m.put("GPA", "0.00");
+            else m.put("GPA", (double)((int)(s.getGPA() * 100)) / 100);
+            // 测试结束
             dataList.add(m);
         }
         return dataList;
@@ -83,6 +88,8 @@ public class TeachController {
     //studentEdit初始化方法
     //studentEdit编辑页面进入时首先请求的一个方法， 如果是Edit,再前台会把对应要编辑的那个学生信息的id作为参数回传给后端，我们通过Integer id = dataRequest.getInteger("id")
     //获得对应学生的id， 根据id从数据库中查出数据，存在Map对象里，并返回前端，如果是添加， 则前端没有id传回，Map 对象数据为空（界面上的数据也为空白）
+
+    // 我认为这里只需要编辑学生的基本信息，因此成绩的改动不在此处。
     @PostMapping("/studentEditInit")
     @PreAuthorize("hasRole('ADMIN')")
     public DataResponse studentEditInit(@Valid @RequestBody DataRequest dataRequest) {
@@ -111,6 +118,8 @@ public class TeachController {
     //相应提交请求的方法，前端把所有数据打包成一个Json对象作为参数传回后端，后端直接可以获得对应的Map对象form, 再从form里取出所有属性，复制到
     //实体对象里，保存到数据库里即可，如果是添加一条记录， id 为空，这是先 new Student 计算新的id， 复制相关属性，保存，如果是编辑原来的信息，
     //id 不为空。则查询出实体对象，复制相关属性，保存后修改数据库信息，永久修改
+
+    // 同理，此处不涉及对成绩单的改动
     @PostMapping("/studentEditSubmit")
     @PreAuthorize(" hasRole('ADMIN')")
     public DataResponse studentEditSubmit(@Valid @RequestBody DataRequest dataRequest) {

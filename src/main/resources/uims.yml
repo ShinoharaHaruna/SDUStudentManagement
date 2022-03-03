@@ -26,6 +26,9 @@ uims:
         - type: text
           prop: phone
           label: 联系电话
+        - type: text
+          prop: GPA
+          label: GPA
         - type: opers
           label: 操作
           opers:
