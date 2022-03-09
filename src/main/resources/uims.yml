@@ -65,3 +65,8 @@ uims:
         - type: input
           prop: phone
           label: 联系电话
+        # Update @ 2022/3/9 18:59
+        # 此处可以为该学生新增一条荣誉，输入的内容是荣誉 title
+        - type: input
+          prop: achievement
+          label: 新增荣誉

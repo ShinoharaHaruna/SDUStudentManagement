@@ -2,6 +2,13 @@ package org.fatmansoft.teach.models;
 
 import javax.persistence.*;
 
+// Update @ 2022/3/8 13:52
+// 考虑重新设计 achievement 数据表
+// 设想中，应该包含字段：id（主键，不变），title（字符串，表示荣誉，新增），student_num（改个名以统一形式）
+// 删去字段：score（因为成就或者说荣誉很难用分数 score 记录），course_id（并不是所有荣誉都能和校内的课程绑定）
+
+// 放弃了 @JoinColumn 转而传入单个字符串，因为没有关联的必要，并且能够节省空间
+
 @Entity
 @Table(	name = "achievement",
         uniqueConstraints = {
@@ -10,15 +17,19 @@ public class Achievement {
     @Id
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name="studentId")
-    private Student student;
+//    @ManyToOne
+//    @JoinColumn(name="student_num")
+//    private Student student;
+    private String studentNum;
 
-    @ManyToOne
-    @JoinColumn(name="courseId")
-    private Student course;
+    // 如第 7 行所声明
+    private String title;
 
-    private Double score;
+//    @ManyToOne
+//    @JoinColumn(name="courseId")
+//    private Student course;
+
+//    private Double score;
 
     public Integer getId() {
         return id;
@@ -28,27 +39,35 @@ public class Achievement {
         this.id = id;
     }
 
-    public Student getStudent() {
-        return student;
+    public String getTitle() {
+        return title;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Student getCourse() {
-        return course;
+    public String getStudentNum() {
+        return studentNum;
     }
 
-    public void setCourse(Student course) {
-        this.course = course;
+    public void setStudentNum(String studentNum) {
+        this.studentNum = studentNum;
     }
 
-    public Double getScore() {
-        return score;
-    }
+    //    public Student getCourse() {
+//        return course;
+//    }
 
-    public void setScore(Double score) {
-        this.score = score;
-    }
+//    public void setCourse(Student course) {
+//        this.course = course;
+//    }
+
+//    public Double getScore() {
+//        return score;
+//    }
+
+//    public void setScore(Double score) {
+//        this.score = score;
+//    }
 }

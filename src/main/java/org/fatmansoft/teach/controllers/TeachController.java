@@ -1,8 +1,10 @@
 package org.fatmansoft.teach.controllers;
 
+import org.fatmansoft.teach.models.Achievement;
 import org.fatmansoft.teach.models.Student;
 import org.fatmansoft.teach.payload.request.DataRequest;
 import org.fatmansoft.teach.payload.response.DataResponse;
+import org.fatmansoft.teach.repository.AchievementRepository;
 import org.fatmansoft.teach.repository.StudentRepository;
 import org.fatmansoft.teach.service.IntroduceService;
 import org.fatmansoft.teach.util.CommonMethod;
@@ -28,6 +30,10 @@ public class TeachController {
     private StudentRepository studentRepository;
     @Autowired
     private IntroduceService introduceService;
+    // Update @ 2022/3/8 14:17
+    // 加 achievement
+    @Autowired
+    private AchievementRepository achievementRepository;
 
 
     //getStudentMapList 查询所有学号或姓名与numName相匹配的学生信息，并转换成Map的数据格式存放到List
@@ -131,6 +137,7 @@ public class TeachController {
         Integer age = CommonMethod.getInteger(form,"age");
         Date birthday = CommonMethod.getDate(form,"birthday");
         String phone = CommonMethod.getString(form, "phone");
+        String achievement = CommonMethod.getString(form,"achievement");
         Student s= null;
         Optional<Student> op;
         if(id != null) {
@@ -155,6 +162,21 @@ public class TeachController {
         s.setBirthday(birthday);
         s.setPhone(phone);
         studentRepository.save(s);  //新建和修改都调用save方法
+        // Update @ 2022/3/9 19:01
+        // 新增加入荣誉的功能
+        if(achievement != null) {
+            Achievement a = new Achievement();
+            a.setTitle(achievement);
+            a.setStudentNum(studentNum);
+            Integer aid = achievementRepository.getMaxId();
+            if(aid == null){
+                aid = 1;
+            }else{
+                ++aid;
+            }
+            a.setId(aid);
+            achievementRepository.save(a);
+        }
         return CommonMethod.getReturnData(s.getId());  // 将记录的id返回前端
     }
 
