@@ -1,0 +1,48 @@
+.aboutus[data-v-24b94a26]{
+    font-size:14px;
+    text-align:left;
+    padding:0 100px
+}
+.intro[data-v-24b94a26]{
+    width:200px;
+    border:1px solid #ddd;
+    border-radius:5px
+}
+.text[data-v-24b94a26]{
+    font-size:14px;
+    text-align:left;
+    line-height:30px;
+    text-indent:2em
+}
+.box-card[data-v-24b94a26]{
+    position:relative
+}
+.item[data-v-24b94a26]{
+    display:inline-block;
+    margin:30px 50px
+}
+.clearfix[data-v-24b94a26]:after,
+.clearfix[data-v-24b94a26]:before{
+    display:table;
+    content:""
+}
+.clearfix[data-v-24b94a26]:after{
+    clear:both
+}
+.clearfix span[data-v-24b94a26]{
+    color:#fff;
+    font-weight:700
+}
+.title p[data-v-24b94a26]
+{
+    color:#8c8888;
+    font-size:15px;
+    margin-bottom:80px;
+    text-align:center
+}
+.large[data-v-24b94a26]{
+    margin-right:50px;
+    font-size:16px;
+    color:#409eff;
+    font-weight:700
+}.topMask[data-v-24b94a26]{width:100px;height:100px;background-color:rgba(68,138,255,.2);transform:rotate(45deg);position:absolute}.square[data-v-24b94a26]{border-radius:5px;top:0}.circular[data-v-24b94a26]{border-radius:50%;top:80px;left:80%;background-color:rgba(255,208,75,.2)}

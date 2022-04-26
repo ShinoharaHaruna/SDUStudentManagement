@@ -1,0 +1,17 @@
+.navi[data-v-24f6b577]{
+    border-bottom:4px solid #38f597
+}
+.header[data-v-24f6b577]
+{/*此处为登录后的菜单后景色*/
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    background-color:#e8e8e8
+}
+.menu-item[data-v-24f6b577]
+{/*此处为登陆后的顶上方菜单的格式*/
+    color:#2f72a1!important;
+    font-size:18px;
+    font-weight:700;
+    font-family:幼圆
+}
