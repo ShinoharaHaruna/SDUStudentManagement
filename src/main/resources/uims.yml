@@ -23,12 +23,6 @@ uims:
         - type: text
           prop: birthday
           label: 出生日期
-        - type: text
-          prop: phone
-          label: 联系电话
-        - type: text
-          prop: GPA
-          label: GPA
         - type: opers
           label: 操作
           opers:
@@ -62,11 +56,3 @@ uims:
         - type: date
           prop: birthday
           label: 出生日期
-        - type: input
-          prop: phone
-          label: 联系电话
-        # Update @ 2022/3/9 18:59
-        # 此处可以为该学生新增一条荣誉，输入的内容是荣誉 title
-        - type: input
-          prop: achievement
-          label: 新增荣誉
