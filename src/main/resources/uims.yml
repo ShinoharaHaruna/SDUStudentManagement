@@ -1,3 +1,4 @@
+
 uims:
   menu:
     - name: student
@@ -70,3 +71,15 @@ uims:
         - type: input
           prop: achievement
           label: 新增荣誉
+    # Update @ 2022/3/9 19：58
+    # 做个查询荣誉
+    - name: achievementQuery
+      type: form
+      title: 荣誉一览
+      item:
+        - type: text
+          prop: id
+          label: 序号
+        - type: text
+          prop: achievement
+          label: 荣誉记录
