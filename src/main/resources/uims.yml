@@ -38,6 +38,9 @@ uims:
         - type: text
           prop: dept
           label: 所在院系
+        - type: text
+          prop: phone
+          label: 联系电话
         - type: opers
           label: 操作
           opers:
@@ -71,6 +74,9 @@ uims:
         - type: input
           prop: age
           label: 年龄
+        - type: input
+          prop: phone
+          label: 联系电话
         - type: input
           prop: dept
           label: 所在院系
