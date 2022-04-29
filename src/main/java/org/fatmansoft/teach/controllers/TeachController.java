@@ -209,4 +209,27 @@ public class TeachController {
         return CommonMethod.getReturnData(data);  //返回前端个人简历数据
     }
 
+    // Update @ 2022/3/9 20：01
+    // 荣誉查询界面
+    @PostMapping("/achievementQuery")
+    @PreAuthorize(" hasRole('ADMIN')")
+    public DataResponse achievementQuery(@Valid @RequestBody DataRequest dataRequest) {
+        Integer id = dataRequest.getInteger("id");
+        System.out.println(id);
+        Achievement a = null;
+        Optional<Achievement> op;
+        if (id != null) {
+            op = achievementRepository.findById(id);
+            if (op.isPresent()) {
+                a = op.get();
+            }
+        }
+        Map form = new HashMap();
+        if (a != null) {
+            form.put("id", a.getId());
+//            form.put("studentNum",s.getStudentNum());
+            form.put("title", a.getTitle());
+        }
+        return CommonMethod.getReturnData(form); //这里回传包含荣誉信息的Map对象
+    }
 }
