@@ -1,3 +1,4 @@
+
 uims:
   menu:
     - name: student
@@ -33,7 +34,6 @@ uims:
           label: 操作
           opers:
             - name: edit
-            - name: query
             - name: delete
       query:
         - type: input
