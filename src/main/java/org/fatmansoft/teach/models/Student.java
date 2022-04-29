@@ -32,6 +32,17 @@ public class Student {
     // json 字符串，存的是该学生的成绩信息，见 org.fatmansoft.teach.models.GradeList
     private String grade;
 
+    // 字符串存学生所属的院系
+    private String dept;
+
+    public String getDept() {
+        return dept;
+    }
+
+    public void setDept(String dept) {
+        this.dept = dept;
+    }
+
     public Integer getId() {
         return id;
     }

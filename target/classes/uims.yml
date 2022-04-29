@@ -2,6 +2,18 @@ uims:
   menu:
     - name: student
       title: 学生管理
+    - name: score
+      title: 成绩管理
+    - name: course
+      title: 课程中心
+    - name: innovation
+      title: 创新实践中心
+    - name: honor
+      title: 荣誉中心
+    - name: activity
+      title: 日常活动
+    - name: log
+      title: 日志信息
   page:
     - name: student
       type: table
@@ -11,7 +23,7 @@ uims:
         - type: text
           prop: studentNum
           label: 学号
-        - type: text
+        - type: link
           prop: studentName
           label: 姓名
         - type: text
@@ -24,21 +36,20 @@ uims:
           prop: birthday
           label: 出生日期
         - type: text
-          prop: phone
-          label: 联系电话
-        - type: text
-          prop: GPA
-          label: GPA
+          prop: dept
+          label: 所在院系
         - type: opers
           label: 操作
           opers:
             - name: edit
-            - name: query
             - name: delete
+            - name: course
+              label: 我的课程
       query:
         - type: input
           prop: numName
           label: 请输入学号或姓名
+
     - name: studentEdit
       type: form
       title: 学生信息
@@ -60,26 +71,273 @@ uims:
         - type: input
           prop: age
           label: 年龄
+        - type: input
+          prop: dept
+          label: 所在院系
         - type: date
           prop: birthday
           label: 出生日期
+
+    - name: score
+      type: table
+      title: 成绩管理
+      showAdd: 1
+      query:
         - type: input
-          prop: phone
-          label: 联系电话
-        # Update @ 2022/3/9 18:59
-        # 此处可以为该学生新增一条荣誉，输入的内容是荣誉 title
-        - type: input
-          prop: achievement
-          label: 新增荣誉
-    # Update @ 2022/3/9 19：58
-    # 做个查询荣誉
-    - name: achievementQuery
-      type: form
-      title: 荣誉一览
+          prop: numCourse
+          label: 请输入课程号或课程名
       item:
         - type: text
-          prop: id
-          label: 序号
+          prop: studentNum
+          label: 学号
         - type: text
-          prop: achievement
-          label: 荣誉记录
+          prop: studentName
+          label: 姓名
+        - type: text
+          prop: courseNum
+          label: 课程号
+        - type: text
+          prop: courseName
+          label: 课程名
+        - type: text
+          prop: mark
+          label: 成绩
+        - type: opers
+          label: 操作
+          opers:
+            - name: edit
+            - name: delete
+
+    - name: scoreEdit
+      type: form
+      title: 学生成绩信息
+      item:
+        - type: input
+          prop: studentId
+          label: 学号
+        - type: input
+          prop: studentName
+          label: 姓名
+        - type: select
+          prop: courseId
+          label: 课程
+        - type: input
+          prop: mark
+          label: 成绩
+
+    - name: course
+      type: table
+      title: 课程中心
+      showAdd: 1
+      item:
+        - type: text
+          prop: courseNum
+          label: 课程号
+        - type: text
+          prop: courseName
+          label: 课程名
+        - type: text
+          prop: mark
+          label: 选课人数
+        - type: opers
+          label: 操作
+          opers:
+            - name: coursedetail
+              label: 详情
+            - name: delete
+
+    - name: innovation
+      type: table
+      title: 创新实践中心
+      showAdd: 1
+      item:
+        - type: text
+          prop: innoNum
+          label: 实践类型号
+        - type: text
+          prop: innoType
+          label: 实践类型
+        - type: text
+          prop: innoName
+          label: 项目名称
+        - type: text
+          prop: studentName
+          label: 学生姓名
+        - type: text
+          porp: innoDate
+          label: 完成时间
+        - type: opers
+          label: 操作
+          opers:
+            - name: edit
+            - name: delete
+            - name: innoDetail
+              label: 详情
+      query:
+        - type: input
+          prop: innptype
+          label: 请输入实践类型或其序号
+
+    - name: innovationEdit
+      type: form
+      title: 创新实践活动管理
+      item:
+        - type: input
+          prop: studentNum
+          label: 学号
+        - type: input
+          prop: studentName
+          label: 姓名
+        - type: select
+          prop: innoType
+          label: 实践类型
+          option:
+            - value: 1
+              label: 社会实践
+            - value: 2
+              label: 学科竞赛
+            - value: 3
+              label: 科技成果
+            - value: 4
+              label: 培训讲座
+            - value: 5
+              label: 创新项目
+            - value: 6
+              label: 校外实习
+        - type: input
+          prop: innoName
+          label: 项目名称
+        - type: date
+          prop: innoDate
+          label: 完成时间
+
+    - name: honor
+      type: table
+      title: 荣誉中心
+      showAdd: 1
+      item:
+        - type: text
+          prop: studentNum
+          label: 学号
+        - type: text
+          prop: studentName
+          label: 姓名
+        - type: text
+          prop: honorName
+          label: 荣誉名称
+        - type: opers
+          label: 操作
+          opers:
+            - name: edit
+            - name: delete
+            - name: honorDetail
+              label: 详情
+      query:
+        - type: input
+          prop: studentNum
+          label: 请输入学生信息或荣誉信息
+
+    - name: honorEdit
+      type: form
+      title: 荣誉信息
+      item:
+        - type: input
+          prop: studentNum
+          label: 学号
+        - type: input
+          prop: studentName
+          label: 姓名
+        - type: input
+          prop: honorName
+          label: 荣誉名称
+
+    - name: activity
+      type: table
+      title: 日常活动
+      showAdd: 1
+      item:
+        - type: text
+          prop: studentNum
+          label: 学号
+        - type: text
+          prop: studentName
+          label: 姓名
+        - type: text
+          prop: acType
+          label: 活动类型
+        - type: text
+          prop: acName
+          label: 活动名称
+        - type: text
+          prop: acDate
+          label: 活动日期
+        - type: opers
+          label: 操作
+          opers:
+            - name: edit
+            - name: delete
+            - name: acDetail
+              label: 活动详情
+      query:
+        - type: input
+          prop: studentNum
+          label: 请输入学生信息或活动信息
+
+    - name: activityEdit
+      type: form
+      title: 日常活动管理
+      item:
+        - type: input
+          prop: studentNum
+          label: 学号
+        - type: input
+          prop: studentName
+          label: 姓名
+        - type: select
+          prop: acType
+          label: 活动类型
+          option:
+            - value: 1
+              label: 体育活动
+            - value: 2
+              label: 旅游
+            - value: 3
+              label: 文艺演出
+            - value: 4
+              label: 聚会
+        - type: input
+          prop: acName
+          label: 活动名称
+        - type: date
+          prop: acDate
+          label: 活动日期
+
+
+    - name: log
+      type: table
+      title: 日志信息
+      showAdd: 1
+      item:
+        - type: text
+          prop: studentNum
+          label: 学号
+        - type: text
+          prop: studentName
+          label: 姓名
+        - type: text
+          prop: sex
+          label: 性别
+        - type: text
+          prop: logType
+          label: 类型
+        - type: opers
+          label: 操作
+          opers:
+            - name: edit
+            - name: delete
+            - name: logDetail
+              label: 详情
+      query:
+        - type: input
+          prop: studentNum
+          label: 请输入学生信息或类型信息

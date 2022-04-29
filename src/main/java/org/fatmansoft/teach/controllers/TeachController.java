@@ -63,12 +63,19 @@ public class TeachController {
             }
             m.put("age",s.getAge());
             m.put("birthday", DateTimeTool.parseDateTime(s.getBirthday(),"yyyy-MM-dd"));  //时间格式转换字符串
-            m.put("phone", s.getPhone());
-            // 测试 GPA 数据
-            // 为了输出保留两位小数，虽然写的有点麻烦但是能跑就行
-            if (s.getGPA() == 0)m.put("GPA", "0.00");
-            else m.put("GPA", (double)((int)(s.getGPA() * 100)) / 100);
-            // 测试结束
+            // Update @ 2022/4/29 16:48
+            // 加入院系
+            m.put("dept", s.getDept());
+
+            // Update @ 2022/4/29 11:32
+
+            // 在新的设计中，联系电话和 GPA 将不再显示在页面中
+//            m.put("phone", s.getPhone());
+//            // 测试 GPA 数据
+//            // 为了输出保留两位小数，虽然写的有点麻烦但是能跑就行
+//            if (s.getGPA() == 0)m.put("GPA", "0.00");
+//            else m.put("GPA", (double)((int)(s.getGPA() * 100)) / 100);
+//            // 测试结束
             dataList.add(m);
         }
         return dataList;
@@ -136,10 +143,24 @@ public class TeachController {
         String sex = CommonMethod.getString(form,"sex");
         Integer age = CommonMethod.getInteger(form,"age");
         Date birthday = CommonMethod.getDate(form,"birthday");
-        String phone = CommonMethod.getString(form, "phone");
+//        String phone = CommonMethod.getString(form, "phone");
+        String dept = CommonMethod.getString(form,"dept");
         String achievement = CommonMethod.getString(form,"achievement");
         Student s= null;
         Optional<Student> op;
+
+        // Update @ 2022/4/29 11:37
+        // 对输入信息进行校验
+        // 在年龄校验这里，因为虚岁和周岁的算法不同，所以就不拿来和生日校验了；另外，我相信年龄上限设为 128 岁是合理的
+        for(int i = 0; i < studentNum.length(); ++i){
+            if(!('0' <= studentNum.charAt(i) && studentNum.charAt(i) <= '9')){
+                return CommonMethod.getReturnMessageError("学号格式错误");
+//                System.out.println("wulalala\n");
+            }
+        }
+        if(age == null)return CommonMethod.getReturnMessageError("年龄输入错误");
+        if(age < 0 || age > 128)return CommonMethod.getReturnMessageError("年龄输入错误");
+
         if(id != null) {
             op= studentRepository.findById(id);  //查询对应数据库中主键为id的值的实体对象
             if(op.isPresent()) {
@@ -160,7 +181,8 @@ public class TeachController {
         s.setSex(sex);
         s.setAge(age);
         s.setBirthday(birthday);
-        s.setPhone(phone);
+//        s.setPhone(phone);
+        s.setDept(dept);
         studentRepository.save(s);  //新建和修改都调用save方法
         // Update @ 2022/3/9 19:01
         // 新增加入荣誉的功能
