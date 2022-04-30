@@ -14,5 +14,5 @@ public interface AchievementRepository extends JpaRepository<Achievement, Intege
     Integer getMaxId();
 
     @Query(value = "from Achievement where ?1=''")
-    List<String> findTitlesByStudentNum(String StudentNum);
+    List<Achievement> findTitlesByStudentNum(String StudentNum);
 }

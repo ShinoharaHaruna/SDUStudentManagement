@@ -99,6 +99,10 @@ public class Student {
         this.phone = phone;
     }
 
+    public String getGrade() {
+        return grade;
+    }
+
     public String getGradeByCourse(String targetCourse) {
         // 初始化json
         String str = grade;

@@ -8,7 +8,7 @@ uims:
       title: 课程中心
     - name: innovation
       title: 创新实践中心
-    - name: honor
+    - name: achievement
       title: 荣誉中心
     - name: activity
       title: 日常活动
@@ -84,13 +84,13 @@ uims:
           prop: birthday
           label: 出生日期
 
-    - name: score
+    - name: grade
       type: table
       title: 成绩管理
       showAdd: 1
       query:
         - type: input
-          prop: numCourse
+          prop: courseNum
           label: 请输入课程号或课程名
       item:
         - type: text
@@ -99,19 +99,13 @@ uims:
         - type: text
           prop: studentName
           label: 姓名
-        - type: text
-          prop: courseNum
-          label: 课程号
-        - type: text
-          prop: courseName
-          label: 课程名
-        - type: text
-          prop: mark
-          label: 成绩
         - type: opers
           label: 操作
           opers:
             - name: edit
+            - name: detail
+              prop: link
+              label: 详情
             - name: delete
 
     - name: scoreEdit
@@ -143,14 +137,22 @@ uims:
           prop: courseName
           label: 课程名
         - type: text
-          prop: mark
+          prop: courseReged
           label: 选课人数
+        - type: text
+          prop: courseCapacity
+          label: 课程容量
         - type: opers
           label: 操作
           opers:
-            - name: coursedetail
+            - name: edit
+            - name: courseDetail
               label: 详情
             - name: delete
+      query:
+        - type: input
+          prop: numName
+          label: 请输入课程号或课程名称
 
     - name: innovation
       type: table
@@ -217,7 +219,7 @@ uims:
           prop: innoDate
           label: 完成时间
 
-    - name: honor
+    - name: achievement
       type: table
       title: 荣誉中心
       showAdd: 1
@@ -229,7 +231,7 @@ uims:
           prop: studentName
           label: 姓名
         - type: text
-          prop: honorName
+          prop: title
           label: 荣誉名称
         - type: opers
           label: 操作
@@ -241,7 +243,7 @@ uims:
       query:
         - type: input
           prop: studentNum
-          label: 请输入学生信息或荣誉信息
+          label: 请输入学号查询荣誉信息
 
     - name: honorEdit
       type: form
@@ -254,7 +256,7 @@ uims:
           prop: studentName
           label: 姓名
         - type: input
-          prop: honorName
+          prop: title
           label: 荣誉名称
 
     - name: activity

@@ -43,6 +43,14 @@ public class Grade {
         this.grade = grade;
     }
 
+    public Integer getAbsence() {
+        return absence;
+    }
+
+    public void setAbsence(Integer absence) {
+        this.absence = absence;
+    }
+
     @Override
     public String toString() {
         return "{\"courseName\":\"" + courseName + "\"" +

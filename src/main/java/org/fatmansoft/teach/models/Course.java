@@ -20,6 +20,25 @@ public class Course {
     @Size(max = 50)
     private String courseName;
 
+    private Integer courseCapacity;
+    private Integer courseReged;
+
+    public Integer getCourseCapacity() {
+        return courseCapacity;
+    }
+
+    public void setCourseCapacity(Integer courseCapacity) {
+        this.courseCapacity = courseCapacity;
+    }
+
+    public Integer getCourseReged() {
+        return courseReged;
+    }
+
+    public void setCourseReged(Integer courseReged) {
+        this.courseReged = courseReged;
+    }
+
     public Integer getId() {
         return id;
     }
