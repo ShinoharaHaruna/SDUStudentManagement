@@ -252,23 +252,18 @@ uims:
           opers:
             - name: edit
             - name: delete
-            - name: honorDetail
-              label: 详情
       query:
         - type: input
           prop: studentNum
           label: 请输入学号查询荣誉信息
 
-    - name: honorEdit
+    - name: achievementEdit
       type: form
       title: 荣誉信息
       item:
         - type: input
           prop: studentNum
           label: 学号
-        - type: input
-          prop: studentName
-          label: 姓名
         - type: input
           prop: title
           label: 荣誉名称

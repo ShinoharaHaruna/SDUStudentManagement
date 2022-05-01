@@ -475,30 +475,7 @@ public class TeachController {
     }
     // 课程中心（已完成）
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //  学生个人简历页面
-    //在系统在主界面内点击个人简历，后台准备个人简历所需要的各类数据组成的段落数据，在前端显示
-    @PostMapping("/getStudentIntroduceData")
-    @PreAuthorize(" hasRole('ADMIN')")
-    public DataResponse getStudentIntroduceData(@Valid @RequestBody DataRequest dataRequest) {
-        Map data = introduceService.getIntroduceDataMap();
-        return CommonMethod.getReturnData(data);  //返回前端个人简历数据
-    }
-
+    // 荣誉中心（已完成）
     // 根据更改的前端需要，重写荣誉系统
     // Update @ 2022/3/9 20：01
     // 荣誉查询界面
@@ -524,11 +501,12 @@ public class TeachController {
 //        return CommonMethod.getReturnData(form); //这里回传包含荣誉信息的Map对象
 //    }
     // 根据学号来查询荣誉成绩
-    public List getAchievementMapList(String stunum) {
+    public List getAchievementMapList(String studentNum) {
         List dataList = new ArrayList();
-        List<Achievement> sList = achievementRepository.findTitlesByStudentNum(stunum);
+        List<Achievement> sList = achievementRepository.findAchievementListByStudentNum(studentNum);
         if(sList == null || sList.size() == 0)
             return dataList;
+        List<Student> sL = studentRepository.findStudentListByNumName(studentNum);
         Achievement s;
         Map m;
         for(int i = 0; i < sList.size();i++) {
@@ -536,17 +514,184 @@ public class TeachController {
             m = new HashMap();
             m.put("id", s.getId());
             m.put("studentNum",s.getStudentNum());
+            m.put("studentName",sL.get(i).getStudentName());
             m.put("title",s.getTitle());
             dataList.add(m);
         }
         return dataList;
     }
+
     @PostMapping("/achievementInit")
     @PreAuthorize(" hasRole('ADMIN')")
     public DataResponse achievementInit(@Valid @RequestBody DataRequest dataRequest) {
         List dataList = getAchievementMapList("");
         return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
     }
+
+    @PostMapping("/achievementQuery")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse achievementQuery(@Valid @RequestBody DataRequest dataRequest) {
+        String studentNum= dataRequest.getString("studentNum");
+        List dataList = getAchievementMapList(studentNum);
+        return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
+    }
+    @PostMapping("/achievementEditInit")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse achievementEditInit(@Valid @RequestBody DataRequest dataRequest) {
+        Integer id = dataRequest.getInteger("id");
+        Achievement s= null;
+        Optional<Achievement> op;
+        if(id != null) {
+            op= achievementRepository.findById(id);
+            if(op.isPresent()) {
+                s = op.get();
+            }
+        }
+        Map form = new HashMap();
+        if(s == null){
+            form.put("id","");
+            form.put("studentNum","");
+            form.put("title","");
+        }else{
+            List<Student> sL = studentRepository.findStudentListByNumName(s.getStudentNum());
+            if(s != null) {
+                form.put("id",s.getId());
+                form.put("studentNum",s.getStudentNum());
+                form.put("title",s.getTitle());
+            }
+        }
+        return CommonMethod.getReturnData(form);
+    }
+    @PostMapping("/achievementEditSubmit")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse achievementSubmit(@Valid @RequestBody DataRequest dataRequest) {
+        Map form = dataRequest.getMap("form");
+        Integer id = CommonMethod.getInteger(form,"id");
+        String studentNum = CommonMethod.getString(form,"studentNum");
+        String title = CommonMethod.getString(form,"title");
+        Achievement s= null;
+        Optional<Achievement> op;
+
+        for(int i = 0; i < studentNum.length(); ++i){
+            if(!('0' <= studentNum.charAt(i) && studentNum.charAt(i) <= '9')){
+                return CommonMethod.getReturnMessageError("学号格式错误");
+            }
+        }
+
+        List<Student> t = studentRepository.findStudentListByNumName(studentNum);
+        if(t.size() == 0) return CommonMethod.getReturnMessageError("未找到");
+//        String studentName = t.get(0).getStudentName();
+//        List<Student> sL = studentRepository.findAll();
+//        Boolean existQ = false;  // 表示这个学生不存在
+//        for(int i = 0; i < sL.size(); ++i){
+//            String n = sL.get(i).getStudentName();
+//            if(n.equals(studentName)){
+//                existQ = true;
+//                break;
+//            }
+//        }
+//        if(!existQ)return CommonMethod.getReturnMessageError("该学生不存在");
+
+        if(id != null) {
+            op= achievementRepository.findById(id);  //查询对应数据库中主键为id的值的实体对象
+            if(op.isPresent()) {
+                s = op.get();
+            }
+        }
+        if(s == null) {
+            s = new Achievement();   //不存在 创建实体对象
+            id = achievementRepository.getMaxId();  // 查询最大的id
+            if(id == null)
+                id = 1;
+            else
+                id = id+1;
+            s.setId(id);  //设置新的id
+        }
+        s.setStudentNum(studentNum);  //设置属性
+        s.setTitle(title);
+        achievementRepository.save(s);  //新建和修改都调用save方法
+        return CommonMethod.getReturnMessageOK();
+    }
+
+    @PostMapping("/achievementDelete")
+    @PreAuthorize(" hasRole('ADMIN')")
+    public DataResponse achievementDelete(@Valid @RequestBody DataRequest dataRequest) {
+        Integer id = dataRequest.getInteger("id");  //获取id值
+        Achievement s= null;
+        Optional<Achievement> op;
+        if(id != null) {
+            op= achievementRepository.findById(id);   //查询获得实体对象
+            if(op.isPresent()) {
+                s = op.get();
+            }
+        }
+        if(s != null) {
+            achievementRepository.delete(s);    //数据库永久删除
+        }
+        return CommonMethod.getReturnMessageOK();  //通知前端操作正常
+    }
+    // 荣誉中心
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //  学生个人简历页面
+    //在系统在主界面内点击个人简历，后台准备个人简历所需要的各类数据组成的段落数据，在前端显示
+    @PostMapping("/getStudentIntroduceData")
+    @PreAuthorize(" hasRole('ADMIN')")
+    public DataResponse getStudentIntroduceData(@Valid @RequestBody DataRequest dataRequest) {
+        Map data = introduceService.getIntroduceDataMap();
+        return CommonMethod.getReturnData(data);  //返回前端个人简历数据
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
-
-
