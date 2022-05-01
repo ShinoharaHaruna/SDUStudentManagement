@@ -1,3 +1,4 @@
+
 uims:
   menu:
     - name: student
@@ -46,6 +47,8 @@ uims:
           opers:
             - name: edit
             - name: delete
+            - name: course
+              label: 我的课程
       query:
         - type: input
           prop: numName
@@ -85,10 +88,11 @@ uims:
     - name: grade
       type: table
       title: 成绩管理
+      showAdd: 1
       query:
         - type: input
-          prop: numName
-          label: 请输入学号或名字
+          prop: courseNum
+          label: 请输入课程号或课程名
       item:
         - type: text
           prop: studentNum
@@ -96,32 +100,31 @@ uims:
         - type: text
           prop: studentName
           label: 姓名
-        - type: text
-          prop: GPA
-          label: GPA
         - type: opers
           label: 操作
           opers:
             - name: edit
+            - name: detail
+              prop: link
+              label: 详情
             - name: delete
 
-    - name: gradeEdit
-      type: table
+    - name: scoreEdit
+      type: form
       title: 学生成绩信息
-      showAdd: 0
       item:
         - type: input
-          prop: courseName
-          label: 课程名
+          prop: studentId
+          label: 学号
         - type: input
-          prop: credit
-          label: 学分
+          prop: studentName
+          label: 姓名
+        - type: select
+          prop: courseId
+          label: 课程
         - type: input
-          prop: grade
-          label: 绩点
-        - type: input
-          prop: absence
-          label: 缺勤数
+          prop: mark
+          label: 成绩
 
     - name: course
       type: table
@@ -151,22 +154,6 @@ uims:
         - type: input
           prop: numName
           label: 请输入课程号或课程名称
-    - name: courseEdit
-      type: form
-      title: 课程管理中心
-      item:
-        - type: input
-          prop: courseNum
-          label: 课程号
-        - type: input
-          prop: courseName
-          label: 课程名称
-        - type: input
-          prop: courseCapacity
-          label: 课程容量
-        - type: input
-          prop: courseReged
-          label: 选课人数
 
     - name: innovation
       type: table
@@ -252,18 +239,23 @@ uims:
           opers:
             - name: edit
             - name: delete
+            - name: honorDetail
+              label: 详情
       query:
         - type: input
           prop: studentNum
           label: 请输入学号查询荣誉信息
 
-    - name: achievementEdit
+    - name: honorEdit
       type: form
       title: 荣誉信息
       item:
         - type: input
           prop: studentNum
           label: 学号
+        - type: input
+          prop: studentName
+          label: 姓名
         - type: input
           prop: title
           label: 荣誉名称
@@ -358,5 +350,3 @@ uims:
         - type: input
           prop: studentNum
           label: 请输入学生信息或类型信息
-
-# Update @ 2022/4/29 16:58

@@ -1,7 +1,6 @@
 package org.fatmansoft.teach.repository;
 
 import org.fatmansoft.teach.models.Achievement;
-import org.fatmansoft.teach.models.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -16,7 +15,4 @@ public interface AchievementRepository extends JpaRepository<Achievement, Intege
 
     @Query(value = "from Achievement where ?1=''")
     List<Achievement> findTitlesByStudentNum(String StudentNum);
-
-    @Query(value = "from Achievement where ?1='' or studentNum like %?1% ")
-    List<Achievement> findAchievementListByStudentNum(String studentNum);
 }
