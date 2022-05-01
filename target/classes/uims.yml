@@ -153,6 +153,22 @@ uims:
         - type: input
           prop: numName
           label: 请输入课程号或课程名称
+    - name: courseEdit
+      type: form
+      title: 课程管理中心
+      item:
+        - type: input
+          prop: courseNum
+          label: 课程号
+        - type: input
+          prop: courseName
+          label: 课程名称
+        - type: input
+          prop: courseCapacity
+          label: 课程容量
+        - type: input
+          prop: courseReged
+          label: 选课人数
 
     - name: innovation
       type: table

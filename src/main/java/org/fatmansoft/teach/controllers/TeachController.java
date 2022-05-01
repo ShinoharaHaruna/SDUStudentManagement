@@ -446,7 +446,7 @@ public class TeachController {
         }
         return CommonMethod.getReturnData(form);
     }
-    @PostMapping("/courseSubmit")
+    @PostMapping("/courseEditSubmit")
     @PreAuthorize("hasRole('ADMIN')")
     public DataResponse courseSubmit(@Valid @RequestBody DataRequest dataRequest) {
         Map form = dataRequest.getMap("form");
