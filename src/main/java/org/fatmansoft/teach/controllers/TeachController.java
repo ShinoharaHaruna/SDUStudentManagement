@@ -233,16 +233,7 @@ public class TeachController {
         return CommonMethod.getReturnMessageOK();  //通知前端操作正常
     }
 
-
-
-
-
-
-
-
-
-
-
+    // 成绩管理（已完成）
     public List getGradeMapList(String numName) {
         List dataList = new ArrayList();
         List<Student> sList = studentRepository.findStudentListByNumName(numName);  //数据库查询操作
@@ -360,96 +351,14 @@ public class TeachController {
         }
         return CommonMethod.getReturnData(dataList);
     }
+    // 成绩管理（已完成）
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //  学生个人简历页面
-    //在系统在主界面内点击个人简历，后台准备个人简历所需要的各类数据组成的段落数据，在前端显示
-    @PostMapping("/getStudentIntroduceData")
-    @PreAuthorize(" hasRole('ADMIN')")
-    public DataResponse getStudentIntroduceData(@Valid @RequestBody DataRequest dataRequest) {
-        Map data = introduceService.getIntroduceDataMap();
-        return CommonMethod.getReturnData(data);  //返回前端个人简历数据
-    }
-
-    // 根据更改的前端需要，重写荣誉系统
-    // Update @ 2022/3/9 20：01
-    // 荣誉查询界面
-//    @PostMapping("/achievementQuery")
-//    @PreAuthorize(" hasRole('ADMIN')")
-//    public DataResponse achievementQuery(@Valid @RequestBody DataRequest dataRequest) {
-//        Integer id = dataRequest.getInteger("id");
-//        System.out.println(id);
-//        Achievement a = null;
-//        Optional<Achievement> op;
-//        if (id != null) {
-//            op = achievementRepository.findById(id);
-//            if (op.isPresent()) {
-//                a = op.get();
-//            }
-//        }
-//        Map form = new HashMap();
-//        if (a != null) {
-//            form.put("id", a.getId());
-////            form.put("studentNum",s.getStudentNum());
-//            form.put("title", a.getTitle());
-//        }
-//        return CommonMethod.getReturnData(form); //这里回传包含荣誉信息的Map对象
-//    }
-    // 根据学号来查询荣誉成绩
-    public List getAchievementMapList(String stunum) {
-        List dataList = new ArrayList();
-        List<Achievement> sList = achievementRepository.findTitlesByStudentNum(stunum);
-        if(sList == null || sList.size() == 0)
-            return dataList;
-        Achievement s;
-        Map m;
-        for(int i = 0; i < sList.size();i++) {
-            s = sList.get(i);
-            m = new HashMap();
-            m.put("id", s.getId());
-            m.put("studentNum",s.getStudentNum());
-            m.put("title",s.getTitle());
-            dataList.add(m);
-        }
-        return dataList;
-    }
-    @PostMapping("/achievementInit")
-    @PreAuthorize(" hasRole('ADMIN')")
-    public DataResponse achievementInit(@Valid @RequestBody DataRequest dataRequest) {
-        List dataList = getAchievementMapList("");
-        return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
-    }
-
-
-    // 尝试完成课程中心
-    // 我认为这里只需要编辑学生的基本信息，因此成绩的改动不在此处。
-
-    //getStudentMapList 查询所有学号或姓名与numName相匹配的学生信息，并转换成Map的数据格式存放到List
-    //
-    // Map 对象是存储数据的集合类，框架会自动将Map转换程用于前后台传输数据的Json对象，Map的嵌套结构和Json的嵌套结构类似，
-    //下面方法是生成前端Table数据的示例，List的每一个Map对用显示表中一行的数据
-    //Map 每个键值对，对应每一个列的值，如m.put("studentNum",s.getStudentNum())， studentNum这一列显示的是具体的学号的值
-    //按照我们测试框架的要求，每个表的主键都是id, 生成表数据是一定要用m.put("id", s.getId());将id传送前端，前端不显示，
-    //但在进入编辑页面是作为参数回传到后台.
+    // 课程中心（已完成）
     public List getCourseMapList(String CourseNum) {
         List dataList = new ArrayList();
-        List<Course> sList = courseRepository.findCourseByCourseNum(CourseNum);  //数据库查询操作
+        List<Course> sList = courseRepository.findCourseListByNumName(CourseNum);  //数据库查询操作
         if(sList == null || sList.size() == 0) return dataList;
         Course s;
         Map m;
@@ -466,7 +375,6 @@ public class TeachController {
         return dataList;
     }
     @PostMapping("/courseInit")
-
     @PreAuthorize("hasRole('ADMIN')")
     public DataResponse courseInit(@Valid @RequestBody DataRequest dataRequest) {
         List dataList = getCourseMapList("");
@@ -475,7 +383,7 @@ public class TeachController {
     @PostMapping("/courseQuery")
     @PreAuthorize("hasRole('ADMIN')")
     public DataResponse courseQuery(@Valid @RequestBody DataRequest dataRequest) {
-        String CourseNum= dataRequest.getString("CourseNum");
+        String CourseNum= dataRequest.getString("numName");
         List dataList = getCourseMapList(CourseNum);
         return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
     }
@@ -565,7 +473,80 @@ public class TeachController {
         }
         return CommonMethod.getReturnMessageOK();  //通知前端操作正常
     }
-    // 课程中心part
+    // 课程中心（已完成）
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //  学生个人简历页面
+    //在系统在主界面内点击个人简历，后台准备个人简历所需要的各类数据组成的段落数据，在前端显示
+    @PostMapping("/getStudentIntroduceData")
+    @PreAuthorize(" hasRole('ADMIN')")
+    public DataResponse getStudentIntroduceData(@Valid @RequestBody DataRequest dataRequest) {
+        Map data = introduceService.getIntroduceDataMap();
+        return CommonMethod.getReturnData(data);  //返回前端个人简历数据
+    }
+
+    // 根据更改的前端需要，重写荣誉系统
+    // Update @ 2022/3/9 20：01
+    // 荣誉查询界面
+//    @PostMapping("/achievementQuery")
+//    @PreAuthorize(" hasRole('ADMIN')")
+//    public DataResponse achievementQuery(@Valid @RequestBody DataRequest dataRequest) {
+//        Integer id = dataRequest.getInteger("id");
+//        System.out.println(id);
+//        Achievement a = null;
+//        Optional<Achievement> op;
+//        if (id != null) {
+//            op = achievementRepository.findById(id);
+//            if (op.isPresent()) {
+//                a = op.get();
+//            }
+//        }
+//        Map form = new HashMap();
+//        if (a != null) {
+//            form.put("id", a.getId());
+////            form.put("studentNum",s.getStudentNum());
+//            form.put("title", a.getTitle());
+//        }
+//        return CommonMethod.getReturnData(form); //这里回传包含荣誉信息的Map对象
+//    }
+    // 根据学号来查询荣誉成绩
+    public List getAchievementMapList(String stunum) {
+        List dataList = new ArrayList();
+        List<Achievement> sList = achievementRepository.findTitlesByStudentNum(stunum);
+        if(sList == null || sList.size() == 0)
+            return dataList;
+        Achievement s;
+        Map m;
+        for(int i = 0; i < sList.size();i++) {
+            s = sList.get(i);
+            m = new HashMap();
+            m.put("id", s.getId());
+            m.put("studentNum",s.getStudentNum());
+            m.put("title",s.getTitle());
+            dataList.add(m);
+        }
+        return dataList;
+    }
+    @PostMapping("/achievementInit")
+    @PreAuthorize(" hasRole('ADMIN')")
+    public DataResponse achievementInit(@Valid @RequestBody DataRequest dataRequest) {
+        List dataList = getAchievementMapList("");
+        return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
+    }
 }
 
 

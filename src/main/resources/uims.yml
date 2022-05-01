@@ -46,8 +46,6 @@ uims:
           opers:
             - name: edit
             - name: delete
-            - name: course
-              label: 我的课程
       query:
         - type: input
           prop: numName
