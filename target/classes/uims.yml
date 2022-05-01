@@ -87,11 +87,10 @@ uims:
     - name: grade
       type: table
       title: 成绩管理
-      showAdd: 1
       query:
         - type: input
-          prop: courseNum
-          label: 请输入课程号或课程名
+          prop: numName
+          label: 请输入学号或名字
       item:
         - type: text
           prop: studentNum
@@ -99,31 +98,32 @@ uims:
         - type: text
           prop: studentName
           label: 姓名
+        - type: text
+          prop: GPA
+          label: GPA
         - type: opers
           label: 操作
           opers:
             - name: edit
-            - name: detail
-              prop: link
-              label: 详情
             - name: delete
 
-    - name: scoreEdit
-      type: form
+    - name: gradeEdit
+      type: table
       title: 学生成绩信息
+      showAdd: 0
       item:
         - type: input
-          prop: studentId
-          label: 学号
+          prop: courseName
+          label: 课程名
         - type: input
-          prop: studentName
-          label: 姓名
-        - type: select
-          prop: courseId
-          label: 课程
+          prop: credit
+          label: 学分
         - type: input
-          prop: mark
-          label: 成绩
+          prop: grade
+          label: 绩点
+        - type: input
+          prop: absence
+          label: 缺勤数
 
     - name: course
       type: table

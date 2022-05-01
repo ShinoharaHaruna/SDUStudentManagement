@@ -99,6 +99,10 @@ public class Student {
         this.phone = phone;
     }
 
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
     public String getGrade() {
         return grade;
     }
@@ -126,13 +130,13 @@ public class Student {
         return null;
     }
 
-    public Double getGPA(){
+    public String getGPA(){
         // 初始化 json
         String str = grade;
         JSONObject jsonObject = JSONObject.parseObject(str);
         if (jsonObject == null){
             // 没有成绩视为 0 分
-            return new Double("0.00");
+            return "暂无成绩";
         }
         JSONArray jsonArray = jsonObject.getJSONArray("courses");
 
@@ -144,8 +148,8 @@ public class Student {
             b += Double.parseDouble(j.get("credit").toString());
         }
         // 这是没选课的情况，GPA 为0
-        if(b.equals(new Double(0.0)))return new Double("0.00");
+        if(b.equals(new Double(0.0)))return "0.00";
         // 否则就正常返回 GPA
-        return a / b;
+        return new java.text.DecimalFormat ("#.00").format (a / b);
     }
 }

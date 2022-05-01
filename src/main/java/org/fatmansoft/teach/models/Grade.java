@@ -7,6 +7,8 @@ package org.fatmansoft.teach.models;
 // 4. 缺勤数
 
 public class Grade {
+
+
     public String courseName;
     public Double credit;
     private Double grade;

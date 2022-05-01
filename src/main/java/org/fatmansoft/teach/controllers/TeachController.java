@@ -1,9 +1,6 @@
 package org.fatmansoft.teach.controllers;
 
-import org.fatmansoft.teach.models.Achievement;
-import org.fatmansoft.teach.models.Course;
-import org.fatmansoft.teach.models.GradeList;
-import org.fatmansoft.teach.models.Student;
+import org.fatmansoft.teach.models.*;
 import org.fatmansoft.teach.payload.request.DataRequest;
 import org.fatmansoft.teach.payload.response.DataResponse;
 import org.fatmansoft.teach.repository.AchievementRepository;
@@ -257,33 +254,38 @@ public class TeachController {
             s = sList.get(i);
             m = new HashMap();
             GradeList glist = new GradeList(s.getGrade());
-            for(int j = 0; j < glist.size(); ++j){
+            for (int j = 0; j < glist.size(); ++j) {
                 m.put("courseName", glist.get(i).getCourseName());
                 m.put("credit", glist.get(i).getCredit());
                 m.put("grade", glist.get(i).getGrade());
                 m.put("absence", glist.get(i).getAbsence());
+                dataList.add(m);
             }
-            dataList.add(m);
         }
         return dataList;
     }
-    //student页面初始化方法
-    //Table界面初始是请求列表的数据，这里缺省查出所有学生的信息，传递字符“”给方法getStudentMapList，返回所有学生数据，
     @PostMapping("/gradeInit")
     @PreAuthorize("hasRole('ADMIN')")
     public DataResponse gradeInit(@Valid @RequestBody DataRequest dataRequest) {
-        List dataList = getGradeMapList("");
-        return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
-    }
-    @PostMapping("/gradeQuery")
-    @PreAuthorize("hasRole('ADMIN')")
-    public DataResponse gradeQuery(@Valid @RequestBody DataRequest dataRequest) {
-        String numName= dataRequest.getString("numName");
-        List dataList = getGradeMapList(numName);
-        return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
+        List dataList = new ArrayList();
+        List<Student> sList = studentRepository.findStudentListByNumName("");  //数据库查询操作
+        if(sList == null || sList.size() == 0)
+            return CommonMethod.getReturnData(dataList);
+        Student s;
+        Map m;
+        for(int i = 0; i < sList.size();i++) {
+            s = sList.get(i);
+            m = new HashMap();
+            m.put("id", s.getId());
+            m.put("studentNum",s.getStudentNum());
+            m.put("studentName",s.getStudentName());
+            m.put("GPA", s.getGPA());
+            dataList.add(m);
+        }
+        return CommonMethod.getReturnData(dataList);
     }
 
-    @PostMapping("/gradeDetail")
+    @PostMapping("/gradeEditInit")
     @PreAuthorize("hasRole('ADMIN')")
     public DataResponse gradeEditInit(@Valid @RequestBody DataRequest dataRequest) {
         Integer id = dataRequest.getInteger("id");
@@ -295,15 +297,68 @@ public class TeachController {
                 s = op.get();
             }
         }
-        GradeList glist = new GradeList(s.getGrade());
-        Map form = new HashMap();
-        for(int i = 0; i < glist.size(); ++i){
-            form.put("courseName", glist.get(i).getCourseName());
-            form.put("credit", glist.get(i).getCredit());
-            form.put("grade", glist.get(i).getGrade());
-            form.put("absence", glist.get(i).getAbsence());
+        List dataList = getGradeMapList(s.getStudentNum());
+        return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
+    }
+
+    @PostMapping("/gradeEditSubmit")
+    @PreAuthorize(" hasRole('ADMIN')")
+    public DataResponse gradeEditSubmit(@Valid @RequestBody DataRequest dataRequest) {
+        Map form = dataRequest.getMap("form");
+        Integer id = CommonMethod.getInteger(form,"id");
+        String courseName = CommonMethod.getString(form,"courseName");
+        Double credit = CommonMethod.getDouble(form,"credit");
+        Double grade = CommonMethod.getDouble(form,"grade");
+        Integer absence = CommonMethod.getInteger(form,"absence");
+        Student s = null;
+        Optional<Student> op;
+        if(id != null) {
+            op= studentRepository.findById(id);  //查询对应数据库中主键为id的值的实体对象
+            if(op.isPresent()) {
+                s = op.get();
+            }
         }
-        return CommonMethod.getReturnData(form); //这里回传包含学生信息的Map对象
+        if(s == null)return CommonMethod.getReturnMessageError("未找到");
+        GradeList glist = new GradeList(s.getGrade());
+        Boolean flag = true;    // true 表示是新的课程
+        if(glist != null){
+            for(int i = 0; i < glist.size(); ++i){
+                if(glist.get(i).getCourseName().equals(courseName)){
+                    flag = false;
+                    glist.get(i).setGrade(grade);
+                    glist.get(i).setAbsence(absence);
+                    glist.get(i).setCredit(credit);
+                }
+            }
+        }
+        if(flag){
+            glist.add(new Grade(courseName, credit, grade, absence));
+        }
+        s.setGrade(glist.toString());
+        studentRepository.save(s);
+        return CommonMethod.getReturnData(s.getId());  // 将记录的id返回前端
+    }
+
+
+    @PostMapping("/gradeQuery")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse gradeQuery(@Valid @RequestBody DataRequest dataRequest) {
+        List dataList = new ArrayList();
+        List<Student> sList = studentRepository.findStudentListByNumName(dataRequest.getString("numName"));  //数据库查询操作
+        if(sList == null || sList.size() == 0)
+            return CommonMethod.getReturnData(dataList);
+        Student s;
+        Map m;
+        for(int i = 0; i < sList.size();i++) {
+            s = sList.get(i);
+            m = new HashMap();
+            m.put("id", s.getId());
+            m.put("studentNum",s.getStudentNum());
+            m.put("studentName",s.getStudentName());
+            m.put("GPA", s.getGPA());
+            dataList.add(m);
+        }
+        return CommonMethod.getReturnData(dataList);
     }
 
 
@@ -468,6 +523,7 @@ public class TeachController {
         }
         if(courseCapacity == null)return CommonMethod.getReturnMessageError("课程容量输入错误");
         if(courseReged == null)return CommonMethod.getReturnMessageError("选课人数输入错误");
+        if(courseCapacity < courseReged)return CommonMethod.getReturnMessageError("选课人数错误");
 
         if(id != null) {
             op= courseRepository.findById(id);  //查询对应数据库中主键为id的值的实体对象
