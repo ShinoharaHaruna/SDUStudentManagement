@@ -7,7 +7,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="teach-server" />
-        <module name="SDUStudentManagement" />
         <module name="java-server" />
         <module name="mayorista" />
         <module name="teach" />
@@ -16,7 +15,6 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="SDUStudentManagement" options="-parameters" />
       <module name="java-server" options="-parameters" />
       <module name="mayorista" options="-parameters" />
       <module name="teach" options="-parameters" />
