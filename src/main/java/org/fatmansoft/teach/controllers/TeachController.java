@@ -69,7 +69,9 @@ public class TeachController {
             m = new HashMap();
             m.put("id", s.getId());
             m.put("studentNum",s.getStudentNum());
-            m.put("studentName",s.getStudentName());
+            String studentNameLink = "/model=student&studentId=" + s.getId() + "&studentName=" + s.getStudentName();
+//            m.put("studentName",s.getStudentName());
+            m.put("studentName", studentNameLink);
             if("1".equals(s.getSex())) {    //数据库存的是编码，显示是名称
 
                 m.put("sex","男");
@@ -787,13 +789,14 @@ public class TeachController {
 
     // 日常活动（已完成）
     public String activityTypeConvert(Integer typeNum){
+        if(typeNum == null)return "";
         switch(typeNum){
             case 1: return "体育活动";
             case 2: return "旅游";
             case 3: return "文艺演出";
             case 4: return "聚会";
+            default: return "";
         }
-        return "";
     }
     public Integer activityTypeConvert(String activityType){
         if(activityType.equals("体育活动"))return 1;
@@ -822,6 +825,7 @@ public class TeachController {
                     break;
                 }
             }
+            m.put("acDate", DateTimeTool.parseDateTime(s.getAcDate(),"yyyy-MM-dd"));
             m.put("acName", s.getAcName());
             dataList.add(m);
         }
@@ -858,7 +862,7 @@ public class TeachController {
             form.put("studentNum",s.getStudentNum());
             form.put("acName",s.getAcName());
             form.put("acType",activityTypeConvert(s.getAcType()));
-            form.put("innoDate", DateTimeTool.parseDateTime(s.getAcDate(),"yyyy-MM-dd"));
+            form.put("acDate", DateTimeTool.parseDateTime(s.getAcDate(),"yyyy-MM-dd"));
         }
         return CommonMethod.getReturnData(form);
     }
@@ -1124,7 +1128,8 @@ public class TeachController {
     @PostMapping("/getStudentIntroduceData")
     @PreAuthorize(" hasRole('ADMIN')")
     public DataResponse getStudentIntroduceData(@Valid @RequestBody DataRequest dataRequest) {
-        Map data = introduceService.getIntroduceDataMap();
+        String studentNum= dataRequest.getString("studentNum");
+        Map data = introduceService.getIntroduceDataMap(studentNum);
         return CommonMethod.getReturnData(data);  //返回前端个人简历数据
     }
 }
