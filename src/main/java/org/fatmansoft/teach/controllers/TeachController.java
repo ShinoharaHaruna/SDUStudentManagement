@@ -41,6 +41,10 @@ public class TeachController {
     @Autowired
     private InnovationRepository innovationRepository;
 
+    // 活动中心
+    @Autowired
+    private ActivityRepository activityRepository;
+
 
     //getStudentMapList 查询所有学号或姓名与numName相匹配的学生信息，并转换成Map的数据格式存放到List
     //
@@ -625,36 +629,7 @@ public class TeachController {
     }
     // 荣誉中心
 
-    //  学生个人简历页面
-    //在系统在主界面内点击个人简历，后台准备个人简历所需要的各类数据组成的段落数据，在前端显示
-    @PostMapping("/getStudentIntroduceData")
-    @PreAuthorize(" hasRole('ADMIN')")
-    public DataResponse getStudentIntroduceData(@Valid @RequestBody DataRequest dataRequest) {
-        Map data = introduceService.getIntroduceDataMap();
-        return CommonMethod.getReturnData(data);  //返回前端个人简历数据
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // 尝试完成创新中心
-
+    // 创新中心（已完成）
     public String innoTypeConvert(Integer typeNum){
         switch(typeNum){
             case 1: return "社会实践";
@@ -806,38 +781,160 @@ public class TeachController {
     }
     // 创新中心
 
+    // 日常活动（已完成）
+    public String activityTypeConvert(Integer typeNum){
+        switch(typeNum){
+            case 1: return "体育活动";
+            case 2: return "旅游";
+            case 3: return "文艺演出";
+            case 4: return "聚会";
+        }
+        return "";
+    }
+    public Integer activityTypeConvert(String activityType){
+        if(activityType.equals("体育活动"))return 1;
+        if(activityType.equals("旅游"))return 2;
+        if(activityType.equals("文艺演出"))return 3;
+        if(activityType.equals("聚会"))return 4;
+        return -1;
+    }
+    public List getActivityMapList(String studentNum) {
+        List dataList = new ArrayList();
+        List<Activity> iList = activityRepository.findActivityListByStudentNum(studentNum);  //数据库查询操作
+        List<Student> sList = studentRepository.findAll();
+        if(sList == null)return dataList;
+        if(iList == null || iList.size() == 0) return dataList;
+        Activity s;
+        Map m;
+        for(int i = 0; i < iList.size();i++) {
+            s = iList.get(i);
+            m = new HashMap();
+            m.put("id", s.getId());
+            m.put("studentNum",s.getStudentNum());
+            m.put("acType",activityTypeConvert(s.getAcType()));
+            for(int j = 0; j < sList.size(); ++j) {
+                if (sList.get(j).getStudentNum().equals(s.getStudentNum())) {
+                    m.put("studentName", sList.get(j).getStudentName());
+                    break;
+                }
+            }
+            m.put("acName", s.getAcName());
+            dataList.add(m);
+        }
+        return dataList;
+    }
+    @PostMapping("/activityInit")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse activityInit(@Valid @RequestBody DataRequest dataRequest) {
+        List dataList = getActivityMapList("");
+        return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
+    }
+    @PostMapping("/activityQuery")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse activityQuery(@Valid @RequestBody DataRequest dataRequest) {
+        String studentNum= dataRequest.getString("studentNum");
+        List dataList = getActivityMapList(studentNum);
+        return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
+    }
+    @PostMapping("/activityEditInit")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse activityEditInit(@Valid @RequestBody DataRequest dataRequest) {
+        Integer id = dataRequest.getInteger("id");
+        Activity s= null;
+        Optional<Activity> op;
+        if(id != null) {
+            op= activityRepository.findById(id);
+            if(op.isPresent()) {
+                s = op.get();
+            }
+        }
+        Map form = new HashMap();
+        if(s != null) {
+            form.put("id",s.getId());
+            form.put("studentNum",s.getStudentNum());
+            form.put("acName",s.getAcName());
+            form.put("acType",activityTypeConvert(s.getAcType()));
+            form.put("innoDate", DateTimeTool.parseDateTime(s.getAcDate(),"yyyy-MM-dd"));
+        }
+        return CommonMethod.getReturnData(form);
+    }
+    @PostMapping("/activityEditSubmit")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse activitySubmit(@Valid @RequestBody DataRequest dataRequest) {
+        Map form = dataRequest.getMap("form");
+        Integer id = CommonMethod.getInteger(form,"id");
+        String studentNum = CommonMethod.getString(form,"studentNum");
+        Integer acType = CommonMethod.getInteger(form, "acType");
+        String acName = CommonMethod.getString(form, "acName");
+        Date acDate = CommonMethod.getDate(form, "acDate");
+        Activity s= null;
+        Optional<Activity> op;
+
+        // 校验部分
+        for(int i = 0; i < studentNum.length(); ++i){
+            if(!('0' <= studentNum.charAt(i) && studentNum.charAt(i) <= '9')){
+                return CommonMethod.getReturnMessageError("学号错误");
+            }
+        }
+//        Boolean existQ = false;
+//        List<Student> sL = studentRepository.findAll();
+//        for(int i = 0; i < sL.size(); ++i){
+//            if(sL.get(i).getStudentNum().equals(studentNum)) {
+//                existQ = true;
+//                break;
+//            }
+//        }
+//        if(!existQ)return CommonMethod.getReturnMessageError("不存在该学生");
+
+        if(id != null) {
+            op= activityRepository.findById(id);  //查询对应数据库中主键为id的值的实体对象
+            if(op.isPresent()) {
+                s = op.get();
+            }
+        }
+        if(s == null) {
+            s = new Activity();   //不存在 创建实体对象
+            id = activityRepository.getMaxId();  // 查询最大的id
+            if(id == null)
+                id = 1;
+            else
+                id = id+1;
+            s.setId(id);  //设置新的id
+        }
+        s.setStudentNum(studentNum);  //设置属性
+        s.setAcType(acType);
+        s.setAcDate(acDate);
+        s.setAcName(acName);
+        activityRepository.save(s);  //新建和修改都调用save方法
+        return CommonMethod.getReturnMessageOK();
+    }
+    @PostMapping("/activityDelete")
+    @PreAuthorize(" hasRole('ADMIN')")
+    public DataResponse activityDelete(@Valid @RequestBody DataRequest dataRequest) {
+        Integer id = dataRequest.getInteger("id");  //获取id值
+        Activity s= null;
+        Optional<Activity> op;
+        if(id != null) {
+            op= activityRepository.findById(id);   //查询获得实体对象
+            if(op.isPresent()) {
+                s = op.get();
+            }
+        }
+        if(s != null) {
+            activityRepository.delete(s);    //数据库永久删除
+        }
+        return CommonMethod.getReturnMessageOK();  //通知前端操作正常
+    }
+    // 日常
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    //  学生个人简历页面
+    //在系统在主界面内点击个人简历，后台准备个人简历所需要的各类数据组成的段落数据，在前端显示
+    @PostMapping("/getStudentIntroduceData")
+    @PreAuthorize(" hasRole('ADMIN')")
+    public DataResponse getStudentIntroduceData(@Valid @RequestBody DataRequest dataRequest) {
+        Map data = introduceService.getIntroduceDataMap();
+        return CommonMethod.getReturnData(data);  //返回前端个人简历数据
+    }
 }
