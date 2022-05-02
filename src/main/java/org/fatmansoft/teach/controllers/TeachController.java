@@ -45,6 +45,10 @@ public class TeachController {
     @Autowired
     private ActivityRepository activityRepository;
 
+    // 日志
+    @Autowired
+    private LogRepository logRepository;
+
 
     //getStudentMapList 查询所有学号或姓名与numName相匹配的学生信息，并转换成Map的数据格式存放到List
     //
@@ -926,6 +930,192 @@ public class TeachController {
         return CommonMethod.getReturnMessageOK();  //通知前端操作正常
     }
     // 日常
+
+    // 日志系统（已完成）
+    public String logTypeConvert(Integer typeNum){
+        switch(typeNum){
+            case 1: return "外出请假";
+            case 2: return "消费流水";
+            case 3: return "文艺演出";
+            case 4: return "其他";
+        }
+        return "";
+    }
+    public Integer LogTypeConvert(String activityType){
+        if(activityType.equals("外出请假"))return 1;
+        if(activityType.equals("消费流水"))return 2;
+        if(activityType.equals("场地、教室租用"))return 3;
+        if(activityType.equals("其他"))return 4;
+        return -1;
+    }
+    public List getLogMapList(String studentNum) {
+        List dataList = new ArrayList();
+        List<Log> iList = logRepository.findLogListByStudentNum(studentNum);  //数据库查询操作
+        List<Student> sList = studentRepository.findAll();
+        if(sList == null)return dataList;
+        if(iList == null || iList.size() == 0) return dataList;
+        Log s;
+        Map m;
+        for(int i = 0; i < iList.size();i++) {
+            s = iList.get(i);
+            m = new HashMap();
+            m.put("id", s.getId());
+            m.put("studentNum",s.getStudentNum());
+            m.put("logType",activityTypeConvert(s.getLogType()));
+            for(int j = 0; j < sList.size(); ++j) {
+                if (sList.get(j).getStudentNum().equals(s.getStudentNum())) {
+                    m.put("studentName", sList.get(j).getStudentName());
+                    break;
+                }
+            }
+            m.put("logDetail", s.getLogDetail());
+            dataList.add(m);
+        }
+        return dataList;
+    }
+    @PostMapping("/logInit")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse logInit(@Valid @RequestBody DataRequest dataRequest) {
+        List dataList = getLogMapList("");
+        System.out.println(dataList.size());
+        return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
+    }
+    @PostMapping("/logQuery")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse logQuery(@Valid @RequestBody DataRequest dataRequest) {
+        String studentNum= dataRequest.getString("studentNum");
+        List dataList = getLogMapList(studentNum);
+        return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
+    }
+    @PostMapping("/logEditInit")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse LogEditInit(@Valid @RequestBody DataRequest dataRequest) {
+        Integer id = dataRequest.getInteger("id");
+        Log s= null;
+        Optional<Log> op;
+        if(id != null) {
+            op= logRepository.findById(id);
+            if(op.isPresent()) {
+                s = op.get();
+            }
+        }
+        Map form = new HashMap();
+        if(s != null) {
+            form.put("id",s.getId());
+            form.put("studentNum",s.getStudentNum());
+            form.put("logDetail",s.getLogDetail());
+            form.put("logType",logTypeConvert(s.getLogType()));
+        }
+        return CommonMethod.getReturnData(form);
+    }
+    @PostMapping("/logEditSubmit")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse logSubmit(@Valid @RequestBody DataRequest dataRequest) {
+        Map form = dataRequest.getMap("form");
+        Integer id = CommonMethod.getInteger(form,"id");
+        String studentNum = CommonMethod.getString(form,"studentNum");
+        Integer logType = CommonMethod.getInteger(form, "logType");
+        String logDetail = CommonMethod.getString(form, "logDetail");
+        Log s= null;
+        Optional<Log> op;
+
+        // 校验部分
+        for(int i = 0; i < studentNum.length(); ++i){
+            if(!('0' <= studentNum.charAt(i) && studentNum.charAt(i) <= '9')){
+                return CommonMethod.getReturnMessageError("学号错误");
+            }
+        }
+//        Boolean existQ = false;
+//        List<Student> sL = studentRepository.findAll();
+//        for(int i = 0; i < sL.size(); ++i){
+//            if(sL.get(i).getStudentNum().equals(studentNum)) {
+//                existQ = true;
+//                break;
+//            }
+//        }
+//        if(!existQ)return CommonMethod.getReturnMessageError("不存在该学生");
+
+        if(id != null) {
+            op= logRepository.findById(id);  //查询对应数据库中主键为id的值的实体对象
+            if(op.isPresent()) {
+                s = op.get();
+            }
+        }
+        if(s == null) {
+            s = new Log();   //不存在 创建实体对象
+            id = logRepository.getMaxId();  // 查询最大的id
+            if(id == null)
+                id = 1;
+            else
+                id = id+1;
+            s.setId(id);  //设置新的id
+        }
+        s.setStudentNum(studentNum);  //设置属性
+        s.setLogType(logType);
+        s.setLogDetail(logDetail);
+        logRepository.save(s);  //新建和修改都调用save方法
+        return CommonMethod.getReturnMessageOK();
+    }
+    @PostMapping("/logDelete")
+    @PreAuthorize(" hasRole('ADMIN')")
+    public DataResponse logDelete(@Valid @RequestBody DataRequest dataRequest) {
+        Integer id = dataRequest.getInteger("id");  //获取id值
+        Log s= null;
+        Optional<Log> op;
+        if(id != null) {
+            op= logRepository.findById(id);   //查询获得实体对象
+            if(op.isPresent()) {
+                s = op.get();
+            }
+        }
+        if(s != null) {
+            logRepository.delete(s);    //数据库永久删除
+        }
+        return CommonMethod.getReturnMessageOK();  //通知前端操作正常
+    }
+    // 日志
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
