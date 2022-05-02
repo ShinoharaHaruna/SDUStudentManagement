@@ -3,9 +3,7 @@ package org.fatmansoft.teach.controllers;
 import org.fatmansoft.teach.models.*;
 import org.fatmansoft.teach.payload.request.DataRequest;
 import org.fatmansoft.teach.payload.response.DataResponse;
-import org.fatmansoft.teach.repository.AchievementRepository;
-import org.fatmansoft.teach.repository.CourseRepository;
-import org.fatmansoft.teach.repository.StudentRepository;
+import org.fatmansoft.teach.repository.*;
 import org.fatmansoft.teach.service.IntroduceService;
 import org.fatmansoft.teach.util.CommonMethod;
 import org.fatmansoft.teach.util.DateTimeTool;
@@ -38,6 +36,10 @@ public class TeachController {
     // 加入课程中心
     @Autowired
     private CourseRepository courseRepository;
+
+    // 加入创新中心
+    @Autowired
+    private InnovationRepository innovationRepository;
 
 
     //getStudentMapList 查询所有学号或姓名与numName相匹配的学生信息，并转换成Map的数据格式存放到List
@@ -152,9 +154,15 @@ public class TeachController {
         Date birthday = CommonMethod.getDate(form,"birthday");
         String phone = CommonMethod.getString(form, "phone");
         String dept = CommonMethod.getString(form,"dept");
-        String achievement = CommonMethod.getString(form,"achievement");
         Student s= null;
         Optional<Student> op;
+
+        List<Student> sL = studentRepository.findAll();
+        if(sL != null){
+            for(int i = 0; i < sL.size(); i++){
+                if(sL.get(i).getStudentNum().equals(studentNum))return CommonMethod.getReturnMessageError("已存在该学号的学生");
+            }
+        }
 
         // Update @ 2022/4/29 11:37
         // 对输入信息进行校验
@@ -195,21 +203,6 @@ public class TeachController {
         s.setPhone(phone);
         s.setDept(dept);
         studentRepository.save(s);  //新建和修改都调用save方法
-        // Update @ 2022/3/9 19:01
-        // 新增加入荣誉的功能
-        if(achievement != null) {
-            Achievement a = new Achievement();
-            a.setTitle(achievement);
-            a.setStudentNum(studentNum);
-            Integer aid = achievementRepository.getMaxId();
-            if(aid == null){
-                aid = 1;
-            }else{
-                ++aid;
-            }
-            a.setId(aid);
-            achievementRepository.save(a);
-        }
         return CommonMethod.getReturnData(s.getId());  // 将记录的id返回前端
     }
 
@@ -632,23 +625,6 @@ public class TeachController {
     }
     // 荣誉中心
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     //  学生个人简历页面
     //在系统在主界面内点击个人简历，后台准备个人简历所需要的各类数据组成的段落数据，在前端显示
     @PostMapping("/getStudentIntroduceData")
@@ -659,6 +635,176 @@ public class TeachController {
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // 尝试完成创新中心
+
+    public String innoTypeConvert(Integer typeNum){
+        switch(typeNum){
+            case 1: return "社会实践";
+            case 2: return "学科竞赛";
+            case 3: return "科技成果";
+            case 4: return "培训讲座";
+            case 5: return "创新项目";
+            case 6: return "校外实习";
+        }
+        return "";
+    }
+    public Integer innoTypeConvert(String innoType){
+        if(innoType.equals("社会实践"))return 1;
+        if(innoType.equals("学科竞赛"))return 2;
+        if(innoType.equals("科技成果"))return 3;
+        if(innoType.equals("培训讲座"))return 4;
+        if(innoType.equals("创新项目"))return 5;
+        if(innoType.equals("校外实习"))return 6;
+        return -1;
+    }
+
+    public List getInnovationMapList(String studentNum) {
+        List dataList = new ArrayList();
+        List<Innovation> iList = innovationRepository.findInnovationListByStudentNum(studentNum);  //数据库查询操作
+        List<Student> sList = studentRepository.findAll();
+        if(sList == null)return dataList;
+        if(iList == null || iList.size() == 0) return dataList;
+        Innovation s;
+        Map m;
+        for(int i = 0; i < iList.size();i++) {
+            s = iList.get(i);
+            m = new HashMap();
+            m.put("id", s.getId());
+            m.put("studentNum",s.getStudentNum());
+            m.put("innoType",innoTypeConvert(s.getInnoType()));
+            for(int j = 0; j < sList.size(); ++j) {
+                if (sList.get(j).getStudentNum().equals(s.getStudentNum())) {
+                    m.put("studentName", sList.get(j).getStudentName());
+                    break;
+                }
+            }
+            m.put("innoName", s.getInnoName());
+            dataList.add(m);
+        }
+        return dataList;
+    }
+    @PostMapping("/innovationInit")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse innovationInit(@Valid @RequestBody DataRequest dataRequest) {
+        List dataList = getInnovationMapList("");
+        return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
+    }
+    @PostMapping("/innovationQuery")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse innovationQuery(@Valid @RequestBody DataRequest dataRequest) {
+        String studentNum= dataRequest.getString("studentNum");
+        List dataList = getInnovationMapList(studentNum);
+        return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
+    }
+    @PostMapping("/innovationEditInit")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse innovationEditInit(@Valid @RequestBody DataRequest dataRequest) {
+        Integer id = dataRequest.getInteger("id");
+        Innovation s= null;
+        Optional<Innovation> op;
+        if(id != null) {
+            op= innovationRepository.findById(id);
+            if(op.isPresent()) {
+                s = op.get();
+            }
+        }
+        Map form = new HashMap();
+        if(s != null) {
+            form.put("id",s.getId());
+            form.put("studentNum",s.getStudentNum());
+            form.put("innoName",s.getInnoName());
+            form.put("innoType",innoTypeConvert(s.getInnoType()));
+            form.put("innoDate", DateTimeTool.parseDateTime(s.getInnoDate(),"yyyy-MM-dd"));
+        }
+        return CommonMethod.getReturnData(form);
+    }
+    @PostMapping("/innovationEditSubmit")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse innovationSubmit(@Valid @RequestBody DataRequest dataRequest) {
+        Map form = dataRequest.getMap("form");
+        Integer id = CommonMethod.getInteger(form,"id");
+        String studentNum = CommonMethod.getString(form,"studentNum");
+        Integer innoType = CommonMethod.getInteger(form, "innoType");
+        String innoName = CommonMethod.getString(form, "innoName");
+        Date innoDate = CommonMethod.getDate(form, "innoDate");
+        Innovation s= null;
+        Optional<Innovation> op;
+
+        // 校验部分
+        for(int i = 0; i < studentNum.length(); ++i){
+            if(!('0' <= studentNum.charAt(i) && studentNum.charAt(i) <= '9')){
+                return CommonMethod.getReturnMessageError("学号错误");
+            }
+        }
+        Boolean existQ = false;
+        List<Student> sL = studentRepository.findAll();
+        for(int i = 0; i < sL.size(); ++i){
+            if(sL.get(i).getStudentNum().equals(studentNum)) {
+                existQ = true;
+                break;
+            }
+        }
+        if(!existQ)return CommonMethod.getReturnMessageError("不存在该学生");
+
+        if(id != null) {
+            op= innovationRepository.findById(id);  //查询对应数据库中主键为id的值的实体对象
+            if(op.isPresent()) {
+                s = op.get();
+            }
+        }
+        if(s == null) {
+            s = new Innovation();   //不存在 创建实体对象
+            id = innovationRepository.getMaxId();  // 查询最大的id
+            if(id == null)
+                id = 1;
+            else
+                id = id+1;
+            s.setId(id);  //设置新的id
+        }
+        s.setStudentNum(studentNum);  //设置属性
+        s.setInnoType(innoType);
+        s.setInnoDate(innoDate);
+        s.setInnoName(innoName);
+        innovationRepository.save(s);  //新建和修改都调用save方法
+        return CommonMethod.getReturnMessageOK();
+    }
+
+    @PostMapping("/innovationDelete")
+    @PreAuthorize(" hasRole('ADMIN')")
+    public DataResponse innovationDelete(@Valid @RequestBody DataRequest dataRequest) {
+        Integer id = dataRequest.getInteger("id");  //获取id值
+        Innovation s= null;
+        Optional<Innovation> op;
+        if(id != null) {
+            op= innovationRepository.findById(id);   //查询获得实体对象
+            if(op.isPresent()) {
+                s = op.get();
+            }
+        }
+        if(s != null) {
+            innovationRepository.delete(s);    //数据库永久删除
+        }
+        return CommonMethod.getReturnMessageOK();  //通知前端操作正常
+    }
+    // 创新中心
 
 
 
