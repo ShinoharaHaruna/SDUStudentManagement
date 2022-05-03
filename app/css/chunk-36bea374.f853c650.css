@@ -1,3 +1,7 @@
+/*玄星越的前言
+初步猜测这应该是简历的样式表
+*/
+
 .aboutus[data-v-24b94a26]{
     font-size:14px;
     text-align:left;
@@ -45,4 +49,22 @@
     font-size:16px;
     color:#409eff;
     font-weight:700
-}.topMask[data-v-24b94a26]{width:100px;height:100px;background-color:rgba(68,138,255,.2);transform:rotate(45deg);position:absolute}.square[data-v-24b94a26]{border-radius:5px;top:0}.circular[data-v-24b94a26]{border-radius:50%;top:80px;left:80%;background-color:rgba(255,208,75,.2)}
+}
+.topMask[data-v-24b94a26]{
+    width:100px;
+    height:100px;
+    background-color:rgba(68,138,255,.2);
+    transform:rotate(45deg);
+    position:absolute
+}
+.square[data-v-24b94a26]
+{
+    border-radius:5px;
+    top:0
+}
+.circular[data-v-24b94a26]{
+    border-radius:50%;
+    top:80px;
+    left:80%;
+    background-color:rgba(255,208,75,.2)
+}

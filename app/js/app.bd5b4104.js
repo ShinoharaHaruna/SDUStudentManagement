@@ -366,7 +366,7 @@
 		s = {
 			class: "show-pwd"
 		},
-		l = Object(a["p"])("远赴人间惊鸿宴");
+		l = Object(a["p"])("登 录");
 		function d(e, n, t, r, d, f) {
 			var b = Object(a["Q"])("el-input"),
 			p = Object(a["Q"])("el-form-item"),
@@ -427,8 +427,24 @@
 					}), Object(a["q"])(g, {
 						type: "primary",
 						style: {
-							width: "100%",
-							"margin-bottom": "30px"
+							width: "40%",
+							"margin-bottom": "30px",
+							"--el-button-font-color":"rgb(255, 255, 255)",/*H:文字的颜色*/
+							border: "none",
+							"font-size": "30px",
+							"margin-top": "10px",
+							cursor: "pointer",
+							"border-radius": "30px",
+							"font-family":"华文行楷",
+							"background-color": "rgba(255,255,255, .1)",
+							"text-shadow": "1px 1px 2px rgba(0, 0, 0, .2)",
+							"border-right": "2px solid rgb(255, 255, 255, .3)",
+							"border-bottom": "2px solid rgb(255, 255, 255, .3)",
+							"box-shadow":"inset 2px 2px 2px rgba(0, 0, 0, .2)",
+							"--el-button-hover-color":"#c2c2c22d",/*H:鼠标悬停时的颜色*/
+							"--el-button-active-font-color":"#e6e6e6",/*H:点击时文字颜色*/
+							"--el-button-active-background-color":"#bfc0c1bc",/*H:点击时背景色*/
+							/* --el-button-active-border-color:#0d84ff */
 						},
 						onClick: f.handleSubmit
 					},
@@ -480,7 +496,7 @@
 		var m = h,
 		g = [{
 			path: "/Home",
-			name: "登出",
+			name: "Home",
 			component: function() {
 				return Promise.all([t.e("chunk-47b50fd0"), t.e("chunk-2d21a3d2")]).then(t.bind(null, "bb51"))
 			}

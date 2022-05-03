@@ -1,15 +1,20 @@
-.navi[data-v-24f6b577]{
-    border-bottom:4px solid #38f597
+/*玄星越的前言
+此处为登陆后的顶上方菜单的相关修改，能够解答关于之前修改字体后对整体有影响的问题
+*/
+
+.navi[data-v-24f6b577]
+{/*H:此处为登陆后菜单下面那个奇奇怪怪的线*/
+    border-bottom:4px solid #c80201
 }
 .header[data-v-24f6b577]
-{/*此处为登录后的菜单后景色*/
+{/*H:此处为登录后的菜单后景色*/
     display:flex;
     flex-direction:row;
     justify-content:center;
     background-color:#e8e8e8
 }
 .menu-item[data-v-24f6b577]
-{/*此处为登陆后的顶上方菜单的格式*/
+{/*H:此处为登陆后的顶上方菜单的格式*/
     color:#2f72a1!important;
     font-size:18px;
     font-weight:700;
