@@ -69,9 +69,9 @@ public class TeachController {
             m = new HashMap();
             m.put("id", s.getId());
             m.put("studentNum",s.getStudentNum());
-            String studentNameLink = "/model=student&studentId=" + s.getId() + "&studentName=" + s.getStudentName();
-//            m.put("studentName",s.getStudentName());
-            m.put("studentName", studentNameLink);
+//            String studentNameLink = "/model=student&studentId=" + s.getId() + "&studentName=" + s.getStudentName();
+            m.put("studentName",s.getStudentName());
+//            m.put("studentName", studentNameLink);
             if("1".equals(s.getSex())) {    //数据库存的是编码，显示是名称
 
                 m.put("sex","男");
@@ -965,7 +965,7 @@ public class TeachController {
             m = new HashMap();
             m.put("id", s.getId());
             m.put("studentNum",s.getStudentNum());
-            m.put("logType",activityTypeConvert(s.getLogType()));
+            m.put("logType",logTypeConvert(s.getLogType()));
             for(int j = 0; j < sList.size(); ++j) {
                 if (sList.get(j).getStudentNum().equals(s.getStudentNum())) {
                     m.put("studentName", sList.get(j).getStudentName());
