@@ -362,7 +362,7 @@ uims:
             - value: 2
               label: 消费流水
             - value: 3
-              label: 场地、教室租用
+              label: 场地、教室申请
             - value: 4
               label: 其他
         - type: input

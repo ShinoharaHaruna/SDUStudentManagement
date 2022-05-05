@@ -940,16 +940,16 @@ public class TeachController {
         switch(typeNum){
             case 1: return "外出请假";
             case 2: return "消费流水";
-            case 3: return "文艺演出";
+            case 3: return "场地、教室申请";
             case 4: return "其他";
         }
         return "";
     }
-    public Integer LogTypeConvert(String activityType){
-        if(activityType.equals("外出请假"))return 1;
-        if(activityType.equals("消费流水"))return 2;
-        if(activityType.equals("场地、教室租用"))return 3;
-        if(activityType.equals("其他"))return 4;
+    public Integer LogTypeConvert(String logType){
+        if(logType.equals("外出请假"))return 1;
+        if(logType.equals("消费流水"))return 2;
+        if(logType.equals("场地、教室申请"))return 3;
+        if(logType.equals("其他"))return 4;
         return -1;
     }
     public List getLogMapList(String studentNum) {
