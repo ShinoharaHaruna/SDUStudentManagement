@@ -1054,15 +1054,15 @@ public class TeachController {
                 return CommonMethod.getReturnMessageError("学号错误");
             }
         }
-//        Boolean existQ = false;
-//        List<Student> sL = studentRepository.findAll();
-//        for(int i = 0; i < sL.size(); ++i){
-//            if(sL.get(i).getStudentNum().equals(studentNum)) {
-//                existQ = true;
-//                break;
-//            }
-//        }
-//        if(!existQ)return CommonMethod.getReturnMessageError("不存在该学生");
+        Boolean existQ = false;
+        List<Student> sL = studentRepository.findAll();
+        for(int i = 0; i < sL.size(); ++i){
+            if(sL.get(i).getStudentNum().equals(studentNum)) {
+                existQ = true;
+                break;
+            }
+        }
+        if(!existQ)return CommonMethod.getReturnMessageError("不存在该学生");
 
         if(id != null) {
             op= logRepository.findById(id);  //查询对应数据库中主键为id的值的实体对象
