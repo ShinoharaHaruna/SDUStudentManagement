@@ -562,7 +562,13 @@ public class TeachController {
             m = new HashMap();
             m.put("id", s.getId());
             m.put("studentNum",s.getStudentNum());
-            m.put("studentName",sL.get(i).getStudentName());
+            for(int j = 0; j < sL.size(); ++j) {
+                if (sL.get(j).getStudentNum().equals(s.getStudentNum())) {
+                    m.put("studentName", sL.get(j).getStudentName());
+                    break;
+                }
+            }
+//            m.put("studentName",sL.get(i).getStudentName());
             m.put("title",s.getTitle());
             dataList.add(m);
         }
