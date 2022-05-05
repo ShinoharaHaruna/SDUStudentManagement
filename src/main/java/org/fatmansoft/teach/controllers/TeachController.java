@@ -334,6 +334,10 @@ public class TeachController {
         Integer absence = CommonMethod.getInteger(form,"absence");
         Student s = null;
         Optional<Student> op;
+
+        if(courseName == null || credit == null || grade == null || absence == null)return CommonMethod.getReturnMessageError("不能有信息留空");
+        if(absence < 0 || grade < 0 || credit < 0)return CommonMethod.getReturnMessageError("数据有误");
+
         if(id != null) {
             op= studentRepository.findById(id);  //查询对应数据库中主键为id的值的实体对象
             if(op.isPresent()) {
