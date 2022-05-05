@@ -167,6 +167,9 @@ public class TeachController {
         Student s= null;
         Optional<Student> op;
 
+        // 不能有信息留空
+        if(studentNum == null || studentName == null || sex == null || age == null || birthday == null || phone == null || dept == null)return CommonMethod.getReturnMessageError("信息不全");
+
         List<Student> sL = studentRepository.findAll();
         if(sL != null){
             for(int i = 0; i < sL.size(); i++){
@@ -600,6 +603,10 @@ public class TeachController {
         Achievement s= null;
         Optional<Achievement> op;
 
+        // 不能有信息留空
+        if(studentNum == null || title == null) return CommonMethod.getReturnMessageError("不能有信息留空");
+        if(studentNum.equals("") || title.equals("")) return CommonMethod.getReturnMessageError("不能有信息留空");
+
         for(int i = 0; i < studentNum.length(); ++i){
             if(!('0' <= studentNum.charAt(i) && studentNum.charAt(i) <= '9')){
                 return CommonMethod.getReturnMessageError("学号格式错误");
@@ -754,6 +761,9 @@ public class TeachController {
         Innovation s= null;
         Optional<Innovation> op;
 
+        // 不能有信息留空
+        if(studentNum == null || innoType == null || innoName == null || innoDate == null)return CommonMethod.getReturnMessageError("不能有信息留空");
+
         // 校验部分
         for(int i = 0; i < studentNum.length(); ++i){
             if(!('0' <= studentNum.charAt(i) && studentNum.charAt(i) <= '9')){
@@ -903,6 +913,9 @@ public class TeachController {
         Activity s= null;
         Optional<Activity> op;
 
+        // 不能有信息留空
+        if(studentNum == null || acType == null || acName == null || acDate == null)return CommonMethod.getReturnMessageError("不能有信息留空");
+
         // 校验部分
         for(int i = 0; i < studentNum.length(); ++i){
             if(!('0' <= studentNum.charAt(i) && studentNum.charAt(i) <= '9')){
@@ -1048,6 +1061,10 @@ public class TeachController {
         Log s= null;
         Optional<Log> op;
 
+        // 不能有信息留空
+        if(studentNum == null || logType == null || logDetail == null)return CommonMethod.getReturnMessageError("不能有信息留空");
+        if(studentNum.equals("") || logDetail.equals(""))return CommonMethod.getReturnMessageError("不能有信息留空");
+
         // 校验部分
         for(int i = 0; i < studentNum.length(); ++i){
             if(!('0' <= studentNum.charAt(i) && studentNum.charAt(i) <= '9')){
@@ -1083,6 +1100,7 @@ public class TeachController {
         s.setLogType(logType);
         s.setLogDetail(logDetail);
         logRepository.save(s);  //新建和修改都调用save方法
+        System.out.println("#1086 done");
         return CommonMethod.getReturnMessageOK();
     }
     @PostMapping("/logDelete")
