@@ -69,9 +69,9 @@ public class TeachController {
             m = new HashMap();
             m.put("id", s.getId());
             m.put("studentNum",s.getStudentNum());
-//            String studentNameLink = "/model=student&studentId=" + s.getId() + "&studentName=" + s.getStudentName();
+            String studentNameLink = "/model=introduce&studentNum=" + s.getStudentNum();
             m.put("studentName",s.getStudentName());
-//            m.put("studentName", studentNameLink);
+            m.put("studentNameParas", studentNameLink);
             if("1".equals(s.getSex())) {    //数据库存的是编码，显示是名称
 
                 m.put("sex","男");
@@ -1146,56 +1146,12 @@ public class TeachController {
     }
     // 日志
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     //  学生个人简历页面
     //在系统在主界面内点击个人简历，后台准备个人简历所需要的各类数据组成的段落数据，在前端显示
     @PostMapping("/getStudentIntroduceData")
     @PreAuthorize(" hasRole('ADMIN')")
     public DataResponse getStudentIntroduceData(@Valid @RequestBody DataRequest dataRequest) {
-        String studentNum= dataRequest.getString("studentNum");
+        String studentNum = dataRequest.getString("studentNum");
         Map data = introduceService.getIntroduceDataMap(studentNum);
         return CommonMethod.getReturnData(data);  //返回前端个人简历数据
     }
