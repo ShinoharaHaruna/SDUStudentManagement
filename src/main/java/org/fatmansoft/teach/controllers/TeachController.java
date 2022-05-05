@@ -456,6 +456,13 @@ public class TeachController {
         Course s= null;
         Optional<Course> op;
 
+        List<Course> cList = courseRepository.findAll();
+        if(cList != null){
+            for(Course c : cList)if(c.getCourseNum().equals(courseNum)){
+                return CommonMethod.getReturnMessageError("不能添加重复课程");
+            }
+        }
+
         // Update @ 2022/4/30 15:23
         // 对输入信息进行校验
         // 这里认为课程号只能由数字构成
