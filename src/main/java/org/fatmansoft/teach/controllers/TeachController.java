@@ -198,6 +198,8 @@ public class TeachController {
             }
         }
 
+        if(phone.length() < 8 || phone.length() > 14)return CommonMethod.getReturnMessageError("联系电话格式错误");
+
         if(id != null) {
             op= studentRepository.findById(id);  //查询对应数据库中主键为id的值的实体对象
             if(op.isPresent()) {
@@ -478,7 +480,9 @@ public class TeachController {
             }
         }
         if(courseCapacity == null)return CommonMethod.getReturnMessageError("课程容量输入错误");
+        if(courseCapacity < 0)return CommonMethod.getReturnMessageError("课程容量输入错误");
         if(courseReged == null)return CommonMethod.getReturnMessageError("选课人数输入错误");
+        if(courseReged < 0)return CommonMethod.getReturnMessageError("选课人数输入错误");
         if(courseCapacity < courseReged)return CommonMethod.getReturnMessageError("选课人数错误");
 
         if(id != null) {
