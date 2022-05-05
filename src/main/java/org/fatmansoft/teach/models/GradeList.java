@@ -17,7 +17,7 @@ public class GradeList {
         this.courses.add(g);
     }
     public GradeList(String str) {
-        if(this.courses == null)return;
+        courses = new ArrayList<Grade>();
         JSONObject jsonObject = JSONObject.parseObject(str);
         if (jsonObject == null)this.courses = null;
         else{
@@ -33,7 +33,9 @@ public class GradeList {
         if(courses == null){
             courses = new ArrayList<Grade>();
             courses.add(e);
-        }else courses.add(e);
+        }else{
+            courses.add(e);
+        }
     }
     public int size(){
         if (this.courses == null)return 0;
