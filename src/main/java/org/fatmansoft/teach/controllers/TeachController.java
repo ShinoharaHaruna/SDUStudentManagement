@@ -230,6 +230,31 @@ public class TeachController {
                 s = op.get();
             }
         }
+        // 删除该学生前，还需要在创新、*荣誉*、日常、日志中删除他的信息
+        List<Innovation> innoList = innovationRepository.findInnovationListByStudentNum(s.getStudentNum());
+        if (innoList != null) {
+            for(Innovation i: innoList){
+                innovationRepository.delete(i);
+            }
+        }
+        List<Achievement> acList = achievementRepository.findAchievementListByStudentNum(s.getStudentNum());
+        if (acList != null) {
+            for(Achievement i: acList){
+                achievementRepository.delete(i);
+            }
+        }
+        List<Activity> actList = activityRepository.findActivityListByStudentNum(s.getStudentNum());
+        if (actList != null) {
+            for(Activity i: actList){
+                activityRepository.delete(i);
+            }
+        }
+        List<Log> logList = logRepository.findLogListByStudentNum(s.getStudentNum());
+        if (logList != null) {
+            for(Log i: logList){
+                logRepository.delete(i);
+            }
+        }
         if(s != null) {
             studentRepository.delete(s);    //数据库永久删除
         }
@@ -981,7 +1006,7 @@ public class TeachController {
     @PreAuthorize("hasRole('ADMIN')")
     public DataResponse logInit(@Valid @RequestBody DataRequest dataRequest) {
         List dataList = getLogMapList("");
-        System.out.println(dataList.size());
+//        System.out.println(dataList.size());
         return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
     }
     @PostMapping("/logQuery")
