@@ -423,6 +423,8 @@ public class TeachController {
             m.put("courseName",s.getCourseName());
             m.put("courseReged",s.getCourseReged());
             m.put("courseCapacity",s.getCourseCapacity());
+            String link = "model=courseinfo&courseNum=" + s.getCourseNum();
+            m.put("courseinfoParas",link);
             dataList.add(m);
         }
         return dataList;
@@ -433,6 +435,29 @@ public class TeachController {
         List dataList = getCourseMapList("");
         return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
     }
+
+    @PostMapping("/courseinfoInit")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse courseinfoInit(@Valid @RequestBody DataRequest dataRequest) {
+        String courseNum = dataRequest.getString("courseNum");
+        System.out.println("#443: ^" + courseNum + "$");
+        List<Course> cL = courseRepository.findCourseListByNumName(courseNum);
+        Course s = cL.get(0);
+        Map form = new HashMap();
+        if(s != null) {
+            form.put("id",s.getId());
+            form.put("courseNum",s.getCourseNum());
+            form.put("courseName",s.getCourseName());
+            form.put("courseCapacity",s.getCourseCapacity());
+            form.put("courseReged", s.getCourseReged());
+            form.put("courseIntro", s.getCourseIntro());
+            form.put("courseBook", s.getCourseBook());
+            form.put("courseware", s.getCourseware());
+            form.put("courseHomework",s.getCourseHomework());
+        }
+        return CommonMethod.getReturnData(form);
+    }
+
     @PostMapping("/courseQuery")
     @PreAuthorize("hasRole('ADMIN')")
     public DataResponse courseQuery(@Valid @RequestBody DataRequest dataRequest) {
@@ -459,6 +484,10 @@ public class TeachController {
             form.put("courseName",s.getCourseName());
             form.put("courseCapacity",s.getCourseCapacity());
             form.put("courseReged", s.getCourseReged());
+            form.put("courseIntro", s.getCourseIntro());
+            form.put("courseBook", s.getCourseBook());
+            form.put("courseware", s.getCourseware());
+            form.put("courseHomework",s.getCourseHomework());
         }
         return CommonMethod.getReturnData(form);
     }
@@ -471,6 +500,10 @@ public class TeachController {
         String courseName = CommonMethod.getString(form,"courseName");
         Integer courseCapacity = CommonMethod.getInteger(form, "courseCapacity");
         Integer courseReged = CommonMethod.getInteger(form, "courseReged");
+        String courseIntro = CommonMethod.getString(form, "courseIntro");
+        String courseBook = CommonMethod.getString(form, "courseBook");
+        String courseware = CommonMethod.getString(form, "courseware");
+        String courseHomework = CommonMethod.getString(form, "courseHomework");
         Course s= null;
         Optional<Course> op;
 
@@ -514,6 +547,10 @@ public class TeachController {
         s.setCourseName(courseName);
         s.setCourseCapacity(courseCapacity);
         s.setCourseReged(courseReged);
+        s.setCourseIntro(courseIntro);
+        s.setCourseBook(courseBook);
+        s.setCourseware(courseware);
+        s.setCourseHomework(courseHomework);
         courseRepository.save(s);  //新建和修改都调用save方法
         return CommonMethod.getReturnMessageOK();
     }

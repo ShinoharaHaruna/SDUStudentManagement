@@ -1,6 +1,7 @@
 package org.fatmansoft.teach.models;
 
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -23,11 +24,18 @@ public class Course {
     @NotBlank
     @Size(max = 50)
     private String courseName;
-
     @Min(0)
     private Integer courseCapacity;
     @Min(0)
     private Integer courseReged;
+
+    // 显然，下列数据都可留空
+    private String courseIntro;
+    private String courseBook;
+    @URL
+    private String courseware;
+    private String courseRef;
+    private String courseHomework;
 
     public Integer getCourseCapacity() {
         return courseCapacity;
@@ -67,5 +75,45 @@ public class Course {
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
+    }
+
+    public String getCourseIntro() {
+        return courseIntro;
+    }
+
+    public void setCourseIntro(String courseIntro) {
+        this.courseIntro = courseIntro;
+    }
+
+    public String getCourseBook() {
+        return courseBook;
+    }
+
+    public void setCourseBook(String courseBook) {
+        this.courseBook = courseBook;
+    }
+
+    public String getCourseware() {
+        return courseware;
+    }
+
+    public void setCourseware(String courseware) {
+        this.courseware = courseware;
+    }
+
+    public String getCourseRef() {
+        return courseRef;
+    }
+
+    public void setCourseRef(String courseRef) {
+        this.courseRef = courseRef;
+    }
+
+    public String getCourseHomework() {
+        return courseHomework;
+    }
+
+    public void setCourseHomework(String courseHomework) {
+        this.courseHomework = courseHomework;
     }
 }

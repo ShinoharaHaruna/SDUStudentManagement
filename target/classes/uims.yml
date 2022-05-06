@@ -164,13 +164,43 @@ uims:
           label: 操作
           opers:
             - name: edit
-            - name: courseDetail
+            - name: courseinfo
               label: 详情
             - name: delete
       query:
         - type: input
           prop: numName
           label: 请输入课程号或课程名称
+
+    - name: courseinfo
+      type: form
+      title: 课程详情
+      item:
+        - type: text
+          prop: courseNum
+          label: 课程号
+        - type: text
+          prop: courseName
+          label: 课程名称
+        - type: text
+          prop: courseCapacity
+          label: 课程容量
+        - type: text
+          prop: courseReged
+          label: 选课人数
+        - type: text
+          prop: courseIntro
+          label: 课程简介
+        - type: text
+          prop: courseBook
+          label: 推荐教材
+        - type: text
+          prop: courseware
+          label: 课件链接
+        - type: text
+          prop: courseHomework
+          label: 课程作业
+
     - name: courseEdit
       type: form
       title: 课程管理中心
@@ -187,6 +217,18 @@ uims:
         - type: input
           prop: courseReged
           label: 选课人数
+        - type: input
+          prop: courseIntro
+          label: 课程简介
+        - type: input
+          prop: courseBook
+          label: 推荐教材
+        - type: input
+          prop: courseware
+          label: 课件链接
+        - type: input
+          prop: courseHomework
+          label: 课程作业
 
     - name: innovation
       type: table
