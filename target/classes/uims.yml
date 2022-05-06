@@ -103,6 +103,8 @@ uims:
           label: 操作
           opers:
             - name: edit
+            - name: chosen
+              label: 选课信息
             - name: delete
 
     - name: gradeEdit
@@ -122,6 +124,24 @@ uims:
         - type: input
           prop: absence
           label: 缺勤数
+
+    - name: chosen
+      type: table
+      title: 选课信息
+      item:
+        - type: text
+          prop: courseName
+          label: 课程名
+        - type: text
+          prop: credit
+          label: 学分
+        - type: text
+          prop: grade
+          label: 绩点
+        - type: text
+          prop: absence
+          label: 缺勤数
+
 
     - name: course
       type: table

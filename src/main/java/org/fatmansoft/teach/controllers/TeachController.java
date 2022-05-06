@@ -279,18 +279,16 @@ public class TeachController {
         if(sList == null || sList.size() == 0)
             return dataList;
         Student s;
+        s = sList.get(0);
+        GradeList gList = new GradeList(s.getGrade());
         Map m;
-        for(int i = 0; i < sList.size();i++) {
-            s = sList.get(i);
+        for(int i = 0; i < gList.size();i++) {
             m = new HashMap();
-            GradeList glist = new GradeList(s.getGrade());
-            for (int j = 0; j < glist.size(); ++j) {
-                m.put("courseName", glist.get(i).getCourseName());
-                m.put("credit", glist.get(i).getCredit());
-                m.put("grade", glist.get(i).getGrade());
-                m.put("absence", glist.get(i).getAbsence());
-                dataList.add(m);
-            }
+            m.put("courseName", gList.get(i).getCourseName());
+            m.put("credit", gList.get(i).getCredit());
+            m.put("grade", gList.get(i).getGrade());
+            m.put("absence", gList.get(i).getAbsence());
+            dataList.add(m);
         }
         return dataList;
     }
@@ -310,8 +308,20 @@ public class TeachController {
             m.put("studentNum",s.getStudentNum());
             m.put("studentName",s.getStudentName());
             m.put("GPA", s.getGPA());
+            String link = "model=chosen&studentNum=" + s.getStudentNum();
+            m.put("chosenParas",link);
             dataList.add(m);
         }
+        return CommonMethod.getReturnData(dataList);
+    }
+
+    @PostMapping("/chosenInit")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse chosenInit(@Valid @RequestBody DataRequest dataRequest) {
+        String studentNum = dataRequest.getString("studentNum");
+        List<Student> sL = studentRepository.findStudentListByNumName(studentNum);
+        Student s= sL.get(0);
+        List dataList = getGradeMapList(s.getStudentNum());
         return CommonMethod.getReturnData(dataList);
     }
 
