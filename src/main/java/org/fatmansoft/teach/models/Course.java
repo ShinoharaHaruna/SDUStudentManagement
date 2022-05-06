@@ -1,8 +1,11 @@
 package org.fatmansoft.teach.models;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -17,10 +20,13 @@ public class Course {
     @Size(max = 20)
     private String courseNum;
 
+    @NotBlank
     @Size(max = 50)
     private String courseName;
 
+    @Min(0)
     private Integer courseCapacity;
+    @Min(0)
     private Integer courseReged;
 
     public Integer getCourseCapacity() {

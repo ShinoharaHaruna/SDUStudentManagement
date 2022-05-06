@@ -2,6 +2,7 @@ package org.fatmansoft.teach.models;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -24,15 +25,19 @@ public class Student {
     private String studentName;
     @Size(max = 2)
     private String sex;
+    @Range(min = 0, max = 128)
     private Integer age;
     private Date birthday;
 
+    @NotBlank
+    @Size(max = 13)
     private String phone;
 
     // json 字符串，存的是该学生的成绩信息，见 org.fatmansoft.teach.models.GradeList
     private String grade;
 
     // 字符串存学生所属的院系
+    @NotBlank
     private String dept;
 
     public String getDept() {

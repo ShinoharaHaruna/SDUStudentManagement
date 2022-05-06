@@ -1,5 +1,7 @@
 package org.fatmansoft.teach.models;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -17,7 +19,10 @@ public class Log {
     @Size(max = 20)
     private String studentNum;
 
+    @Range(min = 1, max = 4)
     private Integer logType;
+    @NotBlank
+    @Size(max = 256)
     private String logDetail;
 
     public Integer getId() {

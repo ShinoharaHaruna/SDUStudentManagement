@@ -6,12 +6,15 @@ package org.fatmansoft.teach.models;
 // 3. 绩点
 // 4. 缺勤数
 
+import org.hibernate.validator.constraints.Range;
+
 public class Grade {
 
 
     public String courseName;
     public Double credit;
     private Double grade;
+    @Range(min = 0)
     private Integer absence;
 
     public Grade(String courseName, Double credit, Double grade, Integer absence) {

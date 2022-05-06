@@ -1,6 +1,7 @@
 package org.fatmansoft.teach.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 // Update @ 2022/3/8 13:52
 // 考虑重新设计 achievement 数据表
@@ -20,9 +21,11 @@ public class Achievement {
 //    @ManyToOne
 //    @JoinColumn(name="student_num")
 //    private Student student;
+    @NotBlank
     private String studentNum;
 
     // 如第 7 行所声明
+    @NotBlank
     private String title;
 
 //    @ManyToOne
