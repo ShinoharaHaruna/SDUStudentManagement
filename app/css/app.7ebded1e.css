@@ -7,7 +7,7 @@
 
 至于写注释的目的，最开始可能是为了忘记哪个板块对应哪一部分，后面干脆方便提示与更改，甚至作为翻译使用了*/
 
-*{/*H:使页面内容无法被选中*/
+*{
     outline: none;
     user-select: none;
 }
@@ -32,6 +32,8 @@
 #nav a.router-link-exact-active{
     color:#512ca8
 }
+
+
 @supports(-webkit-mask:none) and (not (cater-color:#fff)){
     .login-container .el-input input{
         color:rgb(215, 32, 32)
@@ -58,6 +60,7 @@ form{
     box-shadow: 2px 2px 10px rgba(0, 0, 0, .2);
     text-align: center;
 }
+
 
 .login-container .el-input input
 {/*H:登录输入相关格式*/
@@ -274,7 +277,7 @@ html{
 }
 .table-content .el-button{
     font-size:10px;
-    font-family:华文行楷
+    font-family:微软雅黑
 }/*H:操作按钮*/
 .buttonCenter{
     margin-top:5px;
@@ -301,7 +304,7 @@ html{
     color:#fff;/*H:文字*/
     border-radius:28px;
     font-size:10px;
-    font-family:华文行楷;
+    font-family:微软雅黑;
     border:2px solid #00467e;/*H:边框*/
     text-align:center;
     height:20px
@@ -329,7 +332,7 @@ html{
 .commButton,.deleteButton
 {/*H:查询按钮文字*/
     color:#fff;
-    font-family:华文行楷;
+    font-family:微软雅黑;
     text-align:center;
     height:20px
 }/*H:学生管理页面*/

@@ -1,21 +1,21 @@
 (function(e) {
 	function n(n) {
 		for (var r, a, u = n[0], i = n[1], s = n[2], l = 0, d = []; l < u.length; l++) a = u[l],
-		Object.prototype.hasOwnProperty.call(o, a) && o[a] && d.push(o[a][0]),
-		o[a] = 0;
+		Object.prototype.hasOwnProperty.call(c, a) && c[a] && d.push(c[a][0]),
+		c[a] = 0;
 		for (r in i) Object.prototype.hasOwnProperty.call(i, r) && (e[r] = i[r]);
 		f && f(n);
 		while (d.length) d.shift()();
-		return c.push.apply(c, s || []),
+		return o.push.apply(o, s || []),
 		t()
 	}
 	function t() {
-		for (var e, n = 0; n < c.length; n++) {
-			for (var t = c[n], r = !0, a = 1; a < t.length; a++) {
+		for (var e, n = 0; n < o.length; n++) {
+			for (var t = o[n], r = !0, a = 1; a < t.length; a++) {
 				var u = t[a];
-				0 !== o[u] && (r = !1)
+				0 !== c[u] && (r = !1)
 			}
-			r && (c.splice(n--, 1), e = i(i.s = t[0]))
+			r && (o.splice(n--, 1), e = i(i.s = t[0]))
 		}
 		return e
 	}
@@ -23,17 +23,17 @@
 	a = {
 		app: 0
 	},
-	o = {
+	c = {
 		app: 0
 	},
-	c = [];
+	o = [];
 	function u(e) {
 		return i.p + "js/" + ({} [e] || e) + "." + {
-			"chunk-47b50fd0": "50f1c735",
+			"chunk-9c292f60": "5b7c2444",
 			"chunk-0bf17c01": "906e320f",
 			"chunk-2d21a3d2": "5afe43ce",
-			"chunk-36bea374": "8262d25d",
-			"chunk-bcc13a7e": "239560f9",
+			"chunk-3cea1a4b": "0e50e06f",
+			"chunk-bcc13a7e": "cecfc855",
 			"chunk-c43d450a": "321a50f3",
 			"chunk-daa3646e": "d0817847"
 		} [e] + ".js"
@@ -52,55 +52,55 @@
 	i.e = function(e) {
 		var n = [],
 		t = {
-			"chunk-47b50fd0": 1,
-			"chunk-36bea374": 1
+			"chunk-9c292f60": 1,
+			"chunk-3cea1a4b": 1
 		};
 		a[e] ? n.push(a[e]) : 0 !== a[e] && t[e] && n.push(a[e] = new Promise((function(n, t) {
 			for (var r = "css/" + ({} [e] || e) + "." + {
-				"chunk-47b50fd0": "a045eba1",
+				"chunk-9c292f60": "a045eba1",
 				"chunk-0bf17c01": "31d6cfe0",
 				"chunk-2d21a3d2": "31d6cfe0",
-				"chunk-36bea374": "f853c650",
+				"chunk-3cea1a4b": "dc93f6e4",
 				"chunk-bcc13a7e": "31d6cfe0",
 				"chunk-c43d450a": "31d6cfe0",
 				"chunk-daa3646e": "31d6cfe0"
-			} [e] + ".css", o = i.p + r, c = document.getElementsByTagName("link"), u = 0; u < c.length; u++) {
-				var s = c[u],
+			} [e] + ".css", c = i.p + r, o = document.getElementsByTagName("link"), u = 0; u < o.length; u++) {
+				var s = o[u],
 				l = s.getAttribute("data-href") || s.getAttribute("href");
-				if ("stylesheet" === s.rel && (l === r || l === o)) return n()
+				if ("stylesheet" === s.rel && (l === r || l === c)) return n()
 			}
 			var d = document.getElementsByTagName("style");
 			for (u = 0; u < d.length; u++) {
 				s = d[u],
 				l = s.getAttribute("data-href");
-				if (l === r || l === o) return n()
+				if (l === r || l === c) return n()
 			}
 			var f = document.createElement("link");
 			f.rel = "stylesheet",
 			f.type = "text/css",
 			f.onload = n,
 			f.onerror = function(n) {
-				var r = n && n.target && n.target.src || o,
-				c = new Error("Loading CSS chunk " + e + " failed.\n(" + r + ")");
-				c.code = "CSS_CHUNK_LOAD_FAILED",
-				c.request = r,
+				var r = n && n.target && n.target.src || c,
+				o = new Error("Loading CSS chunk " + e + " failed.\n(" + r + ")");
+				o.code = "CSS_CHUNK_LOAD_FAILED",
+				o.request = r,
 				delete a[e],
 				f.parentNode.removeChild(f),
-				t(c)
+				t(o)
 			},
-			f.href = o;
-			var b = document.getElementsByTagName("head")[0];
-			b.appendChild(f)
+			f.href = c;
+			var p = document.getElementsByTagName("head")[0];
+			p.appendChild(f)
 		})).then((function() {
 			a[e] = 0
 		})));
-		var r = o[e];
+		var r = c[e];
 		if (0 !== r) if (r) n.push(r[2]);
 		else {
-			var c = new Promise((function(n, t) {
-				r = o[e] = [n, t]
+			var o = new Promise((function(n, t) {
+				r = c[e] = [n, t]
 			}));
-			n.push(r[2] = c);
+			n.push(r[2] = o);
 			var s, l = document.createElement("script");
 			l.charset = "utf-8",
 			l.timeout = 120,
@@ -110,7 +110,7 @@
 			s = function(n) {
 				l.onerror = l.onload = null,
 				clearTimeout(f);
-				var t = o[e];
+				var t = c[e];
 				if (0 !== t) {
 					if (t) {
 						var r = n && ("load" === n.type ? "missing": n.type),
@@ -121,7 +121,7 @@
 						d.request = a,
 						t[1](d)
 					}
-					o[e] = void 0
+					c[e] = void 0
 				}
 			};
 			var f = setTimeout((function() {
@@ -188,7 +188,7 @@
 	s = s.slice();
 	for (var d = 0; d < s.length; d++) n(s[d]);
 	var f = l;
-	c.push([0, "chunk-vendors"]),
+	o.push([0, "chunk-vendors"]),
 	t()
 })({
 	0 : function(e, n, t) {
@@ -210,16 +210,16 @@
 		}));
 		var r = t("1da1"),
 		a = (t("96cf"), t("d3b7"), t("3ca3"), t("ddb0"), t("2b3d"), t("bc3a")),
-		o = t.n(a),
-		c = t("b50d"),
+		c = t.n(a),
+		o = t("b50d"),
 		u = t("7864");
 		function i(e, n) {
-			return o.a.post("http://localhost:9090" + e, {
+			return c.a.post("http://localhost:9090" + e, {
 				data: n
 			},
 			{
 				headers: {
-					Authorization: "Bearer " + c["a"].state.jwtToken
+					Authorization: "Bearer " + o["a"].state.jwtToken
 				}
 			}).then((function(e) {
 				if (500 != e.status) {
@@ -238,15 +238,15 @@
 		function s() {
 			return i("/api/auth/getUimsConfig", null)
 		}
-		function l() {
-			return i("/api/teach/getStudentIntroduceData", null)
+		function l(e) {
+			return i("/api/teach/getStudentIntroduceData", e)
 		}
 		function d(e, n, t) {
 			var a = {
 				method: "POST",
 				headers: {
 					"content-type": "application/json",
-					Authorization: "Bearer " + c["a"].state.jwtToken
+					Authorization: "Bearer " + o["a"].state.jwtToken
 				},
 				body: JSON.stringify({
 					data: t
@@ -254,7 +254,7 @@
 			};
 			return fetch(e, a).then(function() {
 				var e = Object(r["a"])(regeneratorRuntime.mark((function e(t) {
-					var r, a, o;
+					var r, a, c;
 					return regeneratorRuntime.wrap((function(e) {
 						while (1) switch (e.prev = e.next) {
 						case 0:
@@ -268,11 +268,11 @@
 							return a = t.status,
 							e.abrupt("return", Promise.reject(a));
 						case 6:
-							o = document.createElement("a"),
-							o.href = URL.createObjectURL(r),
-							o.download = n,
-							o.click(),
-							URL.revokeObjectURL(o.href);
+							c = document.createElement("a"),
+							c.href = URL.createObjectURL(r),
+							c.download = n,
+							c.click(),
+							URL.revokeObjectURL(c.href);
 						case 11:
 						case "end":
 							return e.stop()
@@ -302,17 +302,17 @@
 		t("a79d"),
 		t("caad");
 		var r = t("7a23");
-		function a(e, n, t, a, o, c) {
+		function a(e, n, t, a, c, o) {
 			var u = Object(r["Q"])("router-view");
 			return Object(r["H"])(),
 			Object(r["k"])(u)
 		}
-		var o = {
+		var c = {
 			name: "app"
 		},
-		c = (t("a2b6"), t("d959")),
-		u = t.n(c);
-		const i = u()(o, [["render", a]]);
+		o = (t("a2b6"), t("d959")),
+		u = t.n(o);
+		const i = u()(c, [["render", a]]);
 		var s = i,
 		l = t("a18c"),
 		d = t("b50d"),
@@ -322,8 +322,8 @@
 		l["a"].beforeEach((function(e, n, t) {
 			var r = ["/login"],
 			a = !r.includes(e.path),
-			o = d["a"].state.loggedIn;
-			if (a && !o) return t("/login");
+			c = d["a"].state.loggedIn;
+			if (a && !c) return t("/login");
 			t()
 		})),
 		Object(r["j"])(s).use(f["b"]).use(d["a"]).use(l["a"]).mount("#app")
@@ -341,10 +341,10 @@
 		var r = t("6c02"),
 		a = t("7a23");
 		Object(a["K"])("data-v-73d22ff6");
-		var o = {
+		var c = {
 			class: "login-container"
 		},
-		c = Object(a["n"])("div", {
+		o = Object(a["n"])("div", {
 			class: "title-container"
 		},
 		[Object(a["n"])("h3", {
@@ -366,16 +366,16 @@
 		s = {
 			class: "show-pwd"
 		},
-		l = Object(a["p"])("登 录");
+		l = Object(a["p"])("登\xa0\xa0录");
 		function d(e, n, t, r, d, f) {
-			var b = Object(a["Q"])("el-input"),
-			p = Object(a["Q"])("el-form-item"),
-			h = Object(a["Q"])("svg-icon"),
+			var p = Object(a["Q"])("el-input"),
+			h = Object(a["Q"])("el-form-item"),
+			b = Object(a["Q"])("svg-icon"),
 			m = Object(a["Q"])("el-tooltip"),
 			g = Object(a["Q"])("el-button"),
 			v = Object(a["Q"])("el-form");
 			return Object(a["H"])(),
-			Object(a["m"])("div", o, [Object(a["q"])(v, {
+			Object(a["m"])("div", c, [Object(a["q"])(v, {
 				class: "login-form",
 				autocomplete: "on",
 				"label-position": "left"
@@ -383,10 +383,10 @@
 			{
 			default:
 				Object(a["fb"])((function() {
-					return [c, Object(a["q"])(p, null, {
+					return [o, Object(a["q"])(h, null, {
 					default:
 						Object(a["fb"])((function() {
-							return [u, Object(a["q"])(b, {
+							return [u, Object(a["q"])(p, {
 								ref: "username",
 								modelValue: d.username,
 								"onUpdate:modelValue": n[0] || (n[0] = function(e) {
@@ -404,10 +404,10 @@
 					}), Object(a["q"])(m, null, {
 					default:
 						Object(a["fb"])((function() {
-							return [Object(a["q"])(p, null, {
+							return [Object(a["q"])(h, null, {
 							default:
 								Object(a["fb"])((function() {
-									return [i, Object(a["q"])(b, {
+									return [i, Object(a["q"])(p, {
 										modelValue: d.password,
 										"onUpdate:modelValue": n[1] || (n[1] = function(e) {
 											return d.password = e
@@ -416,7 +416,7 @@
 										placeholder: "Password",
 										name: "password"
 									},
-									null, 8, ["modelValue"]), Object(a["n"])("span", s, [Object(a["q"])(h, {
+									null, 8, ["modelValue"]), Object(a["n"])("span", s, [Object(a["q"])(b, {
 										"icon-class": "password"
 									})])]
 								})),
@@ -483,22 +483,22 @@
 					}).
 					catch((function() {
 						e.$message({
-							message: " 这都能输错，什么猪鼻",
+							message: " 用户名或密码错误",
 							type: "warnning"
 						})
 					}))
 				}
 			}
 		},
-		b = (t("3d71"), t("81e5"), t("d959")),
-		p = t.n(b);
-		const h = p()(f, [["render", d], ["__scopeId", "data-v-73d22ff6"]]);
-		var m = h,
+		p = (t("3d71"), t("81e5"), t("d959")),
+		h = t.n(p);
+		const b = h()(f, [["render", d], ["__scopeId", "data-v-73d22ff6"]]);
+		var m = b,
 		g = [{
 			path: "/Home",
 			name: "Home",
 			component: function() {
-				return Promise.all([t.e("chunk-47b50fd0"), t.e("chunk-2d21a3d2")]).then(t.bind(null, "bb51"))
+				return Promise.all([t.e("chunk-9c292f60"), t.e("chunk-2d21a3d2")]).then(t.bind(null, "bb51"))
 			}
 		},
 		{
@@ -514,35 +514,35 @@
 			path: "/BaseTable",
 			name: "BaseTable",
 			component: function() {
-				return Promise.all([t.e("chunk-47b50fd0"), t.e("chunk-c43d450a")]).then(t.bind(null, "d6f0"))
+				return Promise.all([t.e("chunk-9c292f60"), t.e("chunk-c43d450a")]).then(t.bind(null, "d6f0"))
 			}
 		},
 		{
 			path: "/resolver",
 			name: "resolver",
 			component: function() {
-				return Promise.all([t.e("chunk-47b50fd0"), t.e("chunk-bcc13a7e")]).then(t.bind(null, "9751"))
+				return Promise.all([t.e("chunk-9c292f60"), t.e("chunk-bcc13a7e")]).then(t.bind(null, "9751"))
 			}
 		},
 		{
 			path: "/BaseForm",
 			name: "BaseForm",
 			component: function() {
-				return Promise.all([t.e("chunk-47b50fd0"), t.e("chunk-0bf17c01")]).then(t.bind(null, "d4a4"))
+				return Promise.all([t.e("chunk-9c292f60"), t.e("chunk-0bf17c01")]).then(t.bind(null, "d4a4"))
 			}
 		},
 		{
 			path: "/studentIntroduce",
 			name: "studentIntroduce",
 			component: function() {
-				return Promise.all([t.e("chunk-47b50fd0"), t.e("chunk-36bea374")]).then(t.bind(null, "16af"))
+				return Promise.all([t.e("chunk-9c292f60"), t.e("chunk-3cea1a4b")]).then(t.bind(null, "16af"))
 			}
 		},
 		{
 			path: "/JumpForm",
 			name: "JumpForm",
 			component: function() {
-				return Promise.all([t.e("chunk-47b50fd0"), t.e("chunk-daa3646e")]).then(t.bind(null, "2063"))
+				return Promise.all([t.e("chunk-9c292f60"), t.e("chunk-daa3646e")]).then(t.bind(null, "2063"))
 			}
 		}],
 		v = Object(r["a"])({
@@ -563,9 +563,9 @@
 		}));
 		var r = t("5502"),
 		a = t("bfa9"),
-		o = t("a18c"),
-		c = t("bc3a"),
-		u = t.n(c);
+		c = t("a18c"),
+		o = t("bc3a"),
+		u = t.n(o);
 		function i(e, n) {
 			return u.a.post("http://localhost:9090/api/auth/login", {
 				username: e,
@@ -623,7 +623,7 @@
 						Object(s["d"])().then((function(e) {
 							var n = e.data.data.uims.menu;
 							t("navi", n),
-							o["a"].push("/Home")
+							c["a"].push("/Home")
 						}))
 					}))
 				}
@@ -633,4 +633,4 @@
 	},
 	c194: function(e, n, t) {}
 });
-//# sourceMappingURL=app.bd5b4104.js.map
+//# sourceMappingURL=app.3f495e45.js.map

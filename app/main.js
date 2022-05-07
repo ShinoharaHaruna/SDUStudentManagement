@@ -5,7 +5,6 @@ const path = require('path')
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    // H:很显然，这个是窗口的设定
     width: 1680,
     height: 1050,
     webPreferences: {
