@@ -64,6 +64,10 @@ public class IntroduceService {
         m.put("title","社会实践");
         m.put("content","社会实践...");  // 社会实践综述
         attachList.add(m);
+        m = new HashMap();
+        m.put("title","社会实践");
+        m.put("content","社会实践???????????...");  // 社会实践综述
+        attachList.add(m);
         data.put("attachList",attachList);
         return data;
     }
