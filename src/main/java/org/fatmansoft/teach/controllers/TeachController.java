@@ -440,7 +440,6 @@ public class TeachController {
     @PreAuthorize("hasRole('ADMIN')")
     public DataResponse courseinfoInit(@Valid @RequestBody DataRequest dataRequest) {
         String courseNum = dataRequest.getString("courseNum");
-        System.out.println("#443: ^" + courseNum + "$");
         List<Course> cL = courseRepository.findCourseListByNumName(courseNum);
         Course s = cL.get(0);
         Map form = new HashMap();
@@ -1095,7 +1094,7 @@ public class TeachController {
     @PreAuthorize("hasRole('ADMIN')")
     public DataResponse logInit(@Valid @RequestBody DataRequest dataRequest) {
         List dataList = getLogMapList("");
-//        System.out.println(dataList.size());
+//        System.out.println(dataList.size());`
         return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
     }
     @PostMapping("/logQuery")

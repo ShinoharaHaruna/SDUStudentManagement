@@ -8,7 +8,6 @@ import javax.validation.constraints.NotBlank;
 // 设想中，应该包含字段：id（主键，不变），title（字符串，表示荣誉，新增），student_num（改个名以统一形式）
 // 删去字段：score（因为成就或者说荣誉很难用分数 score 记录），course_id（并不是所有荣誉都能和校内的课程绑定）
 
-// 放弃了 @JoinColumn 转而传入单个字符串，因为没有关联的必要，并且能够节省空间
 
 @Entity
 @Table(	name = "achievement",
@@ -52,10 +51,12 @@ public class Achievement {
 
     public String getStudentNum() {
         return studentNum;
+//        return student.getStudentNum();
     }
 
     public void setStudentNum(String studentNum) {
         this.studentNum = studentNum;
+//        this.student.setStudentNum(studentNum);
     }
 
     //    public Student getCourse() {

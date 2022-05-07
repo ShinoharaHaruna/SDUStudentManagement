@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(	name = "student",
@@ -39,6 +40,9 @@ public class Student {
     // 字符串存学生所属的院系
     @NotBlank
     private String dept;
+
+//    @OneToMany(mappedBy="student", cascade = CascadeType.PERSIST)
+//    private List<Achievement> achievements;
 
     public String getDept() {
         return dept;

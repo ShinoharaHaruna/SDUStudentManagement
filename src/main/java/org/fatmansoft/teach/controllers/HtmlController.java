@@ -24,7 +24,6 @@ import java.util.Map;
 public class HtmlController {
     //  http://localhost:9090/test.html
 
-
     public String getHtmlString() {
         String contnet = "";
         contnet += "<h5 align='center'>段落p标记对齐方式</h5>";
