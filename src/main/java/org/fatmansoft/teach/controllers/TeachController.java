@@ -417,6 +417,25 @@ public class TeachController {
         }
         return CommonMethod.getReturnData(dataList);
     }
+
+    @PostMapping("/gradeDelete")
+    @PreAuthorize(" hasRole('ADMIN')")
+    public DataResponse gradeDelete(@Valid @RequestBody DataRequest dataRequest) {
+        Integer id = dataRequest.getInteger("id");  //获取id值
+        Student s= null;
+        Optional<Student> op;
+        if(id != null) {
+            op= studentRepository.findById(id);   //查询获得实体对象
+            if(op.isPresent()) {
+                s = op.get();
+            }
+        }
+        if(s != null) {
+            s.setGrade("");
+            studentRepository.save(s);
+        }
+        return CommonMethod.getReturnMessageOK();
+    }
     // 成绩管理（已完成）
 
 
