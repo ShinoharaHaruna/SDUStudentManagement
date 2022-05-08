@@ -233,6 +233,7 @@ public class TeachController {
         }
         s.setStudentNum(studentNum);  //设置属性
         s.setStudentName(studentName);
+        if(sex.equals("女"))sex = "2";
         s.setSex(sex);
         s.setAge(age);
         s.setBirthday(birthday);
@@ -370,7 +371,7 @@ public class TeachController {
         Optional<Student> op;
 
         if(courseName == null || credit == null || grade == null || absence == null)return CommonMethod.getReturnMessageError("不能有信息留空");
-        if(absence < 0 || grade < 0 || credit < 0)return CommonMethod.getReturnMessageError("数据有误");
+        if(absence < 0 || grade < 0 || credit < 0 || grade > 5.0)return CommonMethod.getReturnMessageError("数据有误");
 
         // 这里，我们还要检验添加的成绩数据的课程是否存在
         Boolean existQ = false;
@@ -1255,7 +1256,9 @@ public class TeachController {
     @PostMapping("/getStudentIntroducePdf")
     public ResponseEntity<StreamingResponseBody> getStudentIntroducePdf(Map dataRequest) {
 //        Integer studentId = CommonMethod.getInteger(dataRequest,"studentId");
+//        Student s = studentRepository.findById(studentId).get();
         String studentNum = CommonMethod.getString(dataRequest,"studentNum");
+//        String studentNum = s.getStudentNum();
         Map data = introduceService.getIntroduceDataMap(studentNum);
         String content= "<!DOCTYPE html>";
         content += "<html>";
