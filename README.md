@@ -1,2 +1,2 @@
 # SDUStudentManagement
-Couse design of Advanced Program Development of SDU
+Course design of Advanced Program Development of SDU
