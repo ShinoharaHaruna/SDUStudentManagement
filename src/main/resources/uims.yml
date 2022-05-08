@@ -84,6 +84,12 @@ uims:
         - type: input
           prop: preInfo
           label: 入学前信息
+        - type: input
+          prop: homeInfo
+          label: 家庭信息
+        - type: input
+          prop: socialRelation
+          label: 社会关系
 
     - name: grade
       type: table

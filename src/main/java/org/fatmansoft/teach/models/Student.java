@@ -44,6 +44,10 @@ public class Student {
     // 字符串存入学前信息
     @NotBlank
     private String preInfo;
+    // 家庭信息
+    private String homeInfo;
+    // 社会关系
+    private String socialRelation;
 
 //    @OneToMany(mappedBy="student", cascade = CascadeType.PERSIST)
 //    private List<Achievement> achievements;
@@ -126,6 +130,22 @@ public class Student {
 
     public String getGrade() {
         return grade;
+    }
+
+    public String getHomeInfo() {
+        return homeInfo;
+    }
+
+    public void setHomeInfo(String homeInfo) {
+        this.homeInfo = homeInfo;
+    }
+
+    public String getSocialRelation() {
+        return socialRelation;
+    }
+
+    public void setSocialRelation(String socialRelation) {
+        this.socialRelation = socialRelation;
     }
 
     public String getGradeByCourse(String targetCourse) {

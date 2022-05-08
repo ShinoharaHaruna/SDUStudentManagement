@@ -162,6 +162,8 @@ public class TeachController {
             form.put("phone", s.getPhone());
             form.put("dept", s.getDept());
             form.put("preInfo", s.getPreInfo());
+            form.put("homeInfo", s.getHomeInfo());
+            form.put("socialRelation", s.getSocialRelation());
         }
         return CommonMethod.getReturnData(form); //这里回传包含学生信息的Map对象
     }
@@ -184,6 +186,8 @@ public class TeachController {
         String phone = CommonMethod.getString(form, "phone");
         String dept = CommonMethod.getString(form,"dept");
         String preInfo = CommonMethod.getString(form, "preInfo");
+        String homeInfo = CommonMethod.getString(form, "homeInfo");
+        String socialRelation = CommonMethod.getString(form, "socialRelation");
         Student s= null;
         Optional<Student> op;
 
@@ -240,6 +244,8 @@ public class TeachController {
         s.setPhone(phone);
         s.setDept(dept);
         s.setPreInfo(preInfo);
+        s.setHomeInfo(homeInfo);
+        s.setSocialRelation(socialRelation);
         studentRepository.save(s);  //新建和修改都调用save方法
         return CommonMethod.getReturnData(s.getId());  // 将记录的id返回前端
     }

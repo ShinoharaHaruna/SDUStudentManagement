@@ -70,13 +70,13 @@ public class IntroduceService {
         data.put("myName", s.getStudentName());   // 学生信息
         // 目前设想，将用户画像集成到学生基本信息综述
         List<String> overview = new ArrayList<String>();
-        if(Double.parseDouble(s.getGPA()) >= 4.0)overview.add("文化课成绩优异");
+        if(Double.parseDouble(s.getGPA()) >= 4.0)overview.add("学习成绩优良");
         if(3 > iList.size() && iList.size() >= 1)overview.add("有过若干次创新实践活动");
         else if(iList.size() >= 3)overview.add("曾多次进行创新实践活动");
         if(3 > aList.size() && aList.size() >= 1)overview.add("获得过数项荣誉");
-        else if(iList.size() >= 3)overview.add("获有许多荣誉");
-        if(5 > aList.size() && aList.size() >= 1)overview.add("数次参与校园活动");
-        else if(iList.size() >= 5)overview.add("多次积极参与校园活动");
+        else if(aList.size() >= 3)overview.add("获有许多荣誉");
+        if(5 > acList.size() && acList.size() >= 1)overview.add("数次参与校园活动");
+        else if(acList.size() >= 5)overview.add("多次积极参与校园活动");
         String ov = "";
         if(overview.size() > 0) {
             ov = overview.get(0);
@@ -88,7 +88,7 @@ public class IntroduceService {
         List attachList = new ArrayList();
         Map m;
         m = new HashMap();
-        m.put("title","学习成绩");   //
+        m.put("title","学习成绩");
         m.put("content","绩点： " + s.getGPA());  // 学生成绩综述
         attachList.add(m);
         m = new HashMap();
