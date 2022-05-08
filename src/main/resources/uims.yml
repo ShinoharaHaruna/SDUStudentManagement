@@ -358,7 +358,7 @@ uims:
       query:
         - type: input
           prop: studentNum
-          label: 请输入学生信息或活动信息
+          label: 请输入学号查询
 
     - name: activityEdit
       type: form
@@ -414,7 +414,7 @@ uims:
       query:
         - type: input
           prop: studentNum
-          label: 请输入学生信息或类型信息
+          label: 请输入学号查询
 
     - name: logEdit
       type: table
