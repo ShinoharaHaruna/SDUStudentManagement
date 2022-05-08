@@ -161,6 +161,7 @@ public class TeachController {
             form.put("birthday", DateTimeTool.parseDateTime(s.getBirthday(),"yyyy-MM-dd")); //这里需要转换为字符串
             form.put("phone", s.getPhone());
             form.put("dept", s.getDept());
+            form.put("preInfo", s.getPreInfo());
         }
         return CommonMethod.getReturnData(form); //这里回传包含学生信息的Map对象
     }
@@ -182,11 +183,12 @@ public class TeachController {
         Date birthday = CommonMethod.getDate(form,"birthday");
         String phone = CommonMethod.getString(form, "phone");
         String dept = CommonMethod.getString(form,"dept");
+        String preInfo = CommonMethod.getString(form, "preInfo");
         Student s= null;
         Optional<Student> op;
 
         // 不能有信息留空
-        if(studentNum == null || studentName == null || age == null || birthday == null || phone == null || dept == null)return CommonMethod.getReturnMessageError("信息不全");
+        if(studentNum == null || studentName == null || age == null || birthday == null || phone == null || dept == null || preInfo == null)return CommonMethod.getReturnMessageError("信息不全");
 
         List<Student> sL = studentRepository.findAll();
         if(sL != null){
@@ -236,6 +238,7 @@ public class TeachController {
         s.setBirthday(birthday);
         s.setPhone(phone);
         s.setDept(dept);
+        s.setPreInfo(preInfo);
         studentRepository.save(s);  //新建和修改都调用save方法
         return CommonMethod.getReturnData(s.getId());  // 将记录的id返回前端
     }

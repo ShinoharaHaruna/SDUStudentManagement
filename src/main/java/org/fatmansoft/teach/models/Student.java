@@ -41,6 +41,10 @@ public class Student {
     @NotBlank
     private String dept;
 
+    // 字符串存入学前信息
+    @NotBlank
+    private String preInfo;
+
 //    @OneToMany(mappedBy="student", cascade = CascadeType.PERSIST)
 //    private List<Achievement> achievements;
 
@@ -110,6 +114,14 @@ public class Student {
 
     public void setGrade(String grade) {
         this.grade = grade;
+    }
+
+    public String getPreInfo() {
+        return preInfo;
+    }
+
+    public void setPreInfo(String preInfo) {
+        this.preInfo = preInfo;
     }
 
     public String getGrade() {

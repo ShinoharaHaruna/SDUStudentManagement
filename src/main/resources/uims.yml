@@ -81,6 +81,9 @@ uims:
         - type: date
           prop: birthday
           label: 出生日期
+        - type: input
+          prop: preInfo
+          label: 入学前信息
 
     - name: grade
       type: table
