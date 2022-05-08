@@ -372,6 +372,14 @@ public class TeachController {
         if(courseName == null || credit == null || grade == null || absence == null)return CommonMethod.getReturnMessageError("不能有信息留空");
         if(absence < 0 || grade < 0 || credit < 0)return CommonMethod.getReturnMessageError("数据有误");
 
+        // 这里，我们还要检验添加的成绩数据的课程是否存在
+        Boolean existQ = false;
+        List<Course> courses = courseRepository.findAll();
+        for(Course c : courses){
+            if(c.getCourseName().equals(courseName)){ existQ = true; break; }
+        }
+        if(!existQ)return CommonMethod.getReturnMessageError("不存在该课程");
+
         if(id != null) {
             op= studentRepository.findById(id);  //查询对应数据库中主键为id的值的实体对象
             if(op.isPresent()) {
@@ -440,8 +448,6 @@ public class TeachController {
         return CommonMethod.getReturnMessageOK();
     }
     // 成绩管理（已完成）
-
-
 
     // 课程中心（已完成）
     public List getCourseMapList(String CourseNum) {
@@ -610,29 +616,6 @@ public class TeachController {
 
     // 荣誉中心（已完成）
     // 根据更改的前端需要，重写荣誉系统
-    // Update @ 2022/3/9 20：01
-    // 荣誉查询界面
-//    @PostMapping("/achievementQuery")
-//    @PreAuthorize(" hasRole('ADMIN')")
-//    public DataResponse achievementQuery(@Valid @RequestBody DataRequest dataRequest) {
-//        Integer id = dataRequest.getInteger("id");
-//        System.out.println(id);
-//        Achievement a = null;
-//        Optional<Achievement> op;
-//        if (id != null) {
-//            op = achievementRepository.findById(id);
-//            if (op.isPresent()) {
-//                a = op.get();
-//            }
-//        }
-//        Map form = new HashMap();
-//        if (a != null) {
-//            form.put("id", a.getId());
-////            form.put("studentNum",s.getStudentNum());
-//            form.put("title", a.getTitle());
-//        }
-//        return CommonMethod.getReturnData(form); //这里回传包含荣誉信息的Map对象
-//    }
     // 根据学号来查询荣誉成绩
     public List getAchievementMapList(String studentNum) {
         List dataList = new ArrayList();
