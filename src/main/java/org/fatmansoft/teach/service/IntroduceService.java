@@ -97,6 +97,7 @@ public class IntroduceService {
         for(Innovation i: iList){
             inno += i.getInnoName() + ";\n";
         }
+        if(inno.equals("")){inno = "暂无";}
         m.put("content", inno);
         attachList.add(m);
         m = new HashMap();
@@ -105,6 +106,7 @@ public class IntroduceService {
         for(Achievement a: aList){
             honor += a.getTitle() + ";\n";
         }
+        if(honor.equals("")){honor = "暂无";}
         m.put("content", honor);
         attachList.add(m);
         data.put("attachList",attachList);
