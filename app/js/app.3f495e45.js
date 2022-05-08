@@ -350,7 +350,7 @@
 		[Object(a["n"])("h3", {
 			class: "title"
 		},
-		"轻云流风")], -1),
+		"欢迎使用系统")], -1),
 		u = Object(a["n"])("span", {
 			class: "svg-container"
 		},

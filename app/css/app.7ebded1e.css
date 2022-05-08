@@ -45,6 +45,7 @@
     width:85%
 }
 
+
 form{
     background-color: rgb(255, 255, 255, .3);
     width: 400px;
@@ -75,6 +76,7 @@ form{
     height:47px;
     caret-color:rgb(44, 201, 240)/*H:光标*/
 }
+
 
 
 input{
@@ -126,13 +128,17 @@ input:focus{
     width:100%;/*H:同上，此为横向*/
     /* background-color:#ffffff00; *//*H:之前存在的，改动时不太愿意直接删除*/
     background-color: rgb(255, 255, 255);/*H:好像有显示图片的时候这个没啥用吧*/
-    background: url(background01.png);/*H:图片，好像需要放在css文件夹下*/
+    background: url(background0201.png);/*H:图片，好像需要放在css文件夹下*/
     background-repeat: no-repeat;/*H:表示图片是否重复，此处表示不重复，其中repea-x表示横重复，repeat-y表示纵重复*/
     background-size: cover;
     -webkit-background-size: cover;
     -o-background-size: cover;
     background-position: center 0
     /*overflow:hidden *//*H:之前存在的，表示为超出部分是否剪裁，hidden表示剪裁，visible表示不剪裁，默认为后者；感觉对于背景图片的显示来说没啥意义*/
+}
+
+img{
+    width: 10px;
 }
 
 /* .login-container .login-form[data-v-73d22ff6]{
@@ -176,7 +182,7 @@ h3{
     top: 6px;
     font-size: 40px;
     padding-bottom: 15px;
-    color: rgba(91, 228, 238, 0.771);
+    color: rgba(31, 64, 181, 0.771);
     text-align: center;
     font-weight: 400;
     font-family: 华文行楷;
