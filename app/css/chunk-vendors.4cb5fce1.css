@@ -10703,7 +10703,7 @@
     margin-bottom:-1px
 }
 .el-tag{
-    --el-tag-font-size:12px;
+    --el-tag-font-size:30px;
     --el-tag-border-radius:4px;
     --el-tag-padding:0 10px;
     --el-tag-background-color:#ecf5ff;
@@ -10714,7 +10714,7 @@
     border-color:var(--el-tag-border-color);
     color:var(--el-tag-font-color);
     display:inline-block;
-    height:32px;
+    height:35px;
     padding:var(--el-tag-padding);
     line-height:30px;
     font-size:var(--el-tag-font-size);
@@ -12437,7 +12437,7 @@
     padding:0 20px;
     font-weight:500;
     color:var(--el-text-color-primary);
-    font-size:14px
+    font-size:18px
 }
 .el-divider__text.is-left{
     left:20px;
