@@ -39,4 +39,4 @@
 
 数据库 ER 图如下：
 
-![ER](README.assets\ER.png)
+![ER](README.assets/ER.png)
