@@ -37,6 +37,14 @@
 
 ------
 
-数据库 ER 图如下：
+-   数据库 ER 图如下：
 
 ![ER](README.assets/ER.png)
+
+-   数据库模型如下：
+
+![数据库模型简介](README.assets/数据库模型简介.png)
+
+-   UML 图如下：
+
+![UML](README.assets/UML.png)
