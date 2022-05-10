@@ -331,10 +331,10 @@ html{
 {/*H:查询按钮格式*/
     background:#3fa582;/*H:背景色*/
     border-radius:28px;
-    position: absolute;
+    position: relative;
     font-size:18px;
-    top: 85px;
-    left: 900px;
+    /* top: 85px;
+    left: 900px; */
     border:2px solid #090;/*H:边框*/
     width:100px
 }
