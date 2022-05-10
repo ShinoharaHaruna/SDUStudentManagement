@@ -1261,58 +1261,64 @@ public class TeachController {
     }
     @PostMapping("/getStudentIntroducePdf")
     public ResponseEntity<StreamingResponseBody> getStudentIntroducePdf(Map dataRequest) {
-//        Integer studentId = CommonMethod.getInteger(dataRequest,"studentId");
-//        Student s = studentRepository.findById(studentId).get();
-        String studentNum = CommonMethod.getString(dataRequest,"studentNum");
+        String s1 = CommonMethod.getString(dataRequest,"studentNum");
+        String s2 = studentRepository.findStudentListByNumName("").get(0).getStudentNum();
+        String studentNum = (s1.equals(""))?s2:s1;
+        Student s = studentRepository.findStudentListByNumName(studentNum).get(0);
+
 //        String studentNum = s.getStudentNum();
         Map data = introduceService.getIntroduceDataMap(studentNum);
-        String content= "<!DOCTYPE html>";
-        content += "<html>";
-        content += "<head>";
-        content += "<style>";
-        content += "html { font-family: \"SourceHanSansSC\", \"Open Sans\";}";
-        content += "</style>";
-        content += "<meta charset='UTF-8' />";
-        content += "<title>个人简历</title>";
-        content += "</head>";
+        String content= "<!DOCTYPE html><html><head><style> html { font-family: \"SourceHanSansSC\", \"Open Sans\";}</style><meta charset='UTF-8' /><title>个人简历</title></head><body><div><div id='write'  class=''><center><h1>";
 
         String myName = (String) data.get("myName");
         String overview = (String) data.get("overview");
         List<Map> attachList = (List) data.get("attachList");
 
-//        content += getHtmlString();
-        content += "<body>";
+        content += s.getStudentName();
+        content += "</h1><div><span>";
+        content += s.getPhone();
+        content += "</span>·<span>";
+        content += s.getStudentNum();
+        content += "@mail.sdu.edu.cn</span></div></center>";
+        content += "<hr />";
+        content += "<h2 id='个人信息'><span> 个人信息</span></h2><ul><li><span>";
+        content += "性别：" + (s.getSex().equals("1")?"男":"女");
+        content += "</span></li><li><span>";
+        content += DateTimeTool.parseDateTime(s.getBirthday(),"yyyy年MM月dd日") + "出生";
+        content += "</span></li></ul><h2 id='教育经历'><span> 教育经历</span></h2><ul><li><span>绩点：";
+        content += s.getGPA();
+//        content += "</span></li></ul><h2 id='创新实践经历'><span> 创新实践经历</span></h2><ul>";
+        content += "</span></li></ul>";
+        // <li><p><strong><span>条目 1 标题</span></strong></p><p><span>条目 1 内容</span></p></li>
+        for(int i = 5; i < attachList.size(); ++i)content += "<h2><span> " + (attachList.get(i).get("title")==null?"": attachList.get(i).get("title")) + "</span></h2><ul><li><span>" + (attachList.get(i).get("content")==null?"": attachList.get(i).get("content")) + "</span></li></ul>";
+        content += "</div></div></body></html>";
 
-        content += "<table style='width: 100%;'>";
-        content += "   <thead >";
-        content += "     <tr style='text-align: center;font-size: 32px;font-weight:bold;'>";
-        content += "        "+myName+" </tr>";
-        content += "   </thead>";
-        content += "   </table>";
 
-        content += "<table style='width: 100%;'>";
-        content += "   <thead >";
-        content += "     <tr style='text-align: center;font-size: 32px;font-weight:bold;'>";
-        content += "        "+overview+" </tr>";
-        content += "   </thead>";
-        content += "   </table>";
-
-        content += "<table style='width: 100%;border-collapse: collapse;border: 1px solid black;'>";
-        content +=   " <tbody>";
-
-        for(int i = 0; i <attachList.size(); i++ ){
-            content += "     <tr style='text-align: center;border: 1px solid black;font-size: 14px;'>";
-            content += "      "+attachList.get(i).get("title")+" ";
-            content += "     </tr>";
-            content += "     <tr style='text-align: center;border: 1px solid black; font-size: 14px;'>";
-            content += "            "+attachList.get(i).get("content")+" ";
-            content += "     </tr>";
-        }
-        content +=   " </tbody>";
-        content += "   </table>";
-
-        content += "</body>";
-        content += "</html>";
+//        content += "<table style='width: 100%;'>";
+//        content += "   <thead >";
+//        content += "     <tr style='text-align: center;font-size: 32px;font-weight:bold;'>";
+//        content += "        "+overview+" </tr>";
+//        content += "   </thead>";
+//        content += "   </table>";
+//
+//        content += "<table style='width: 100%;border-collapse: collapse;border: 1px solid black;'>";
+//        content +=   " <tbody>";
+//
+//        for(int i = 0; i <attachList.size(); i++ ){
+//            content += "     <tr style='text-align: center;border: 1px solid black;font-size: 14px;'>";
+//            if(attachList.get(i).get("title") != null)
+//            content += "      "+attachList.get(i).get("title")+" ";
+//            content += "     </tr>";
+//            content += "     <tr style='text-align: center;border: 1px solid black; font-size: 14px;'>";
+//            if(attachList.get(i).get("content") != null)
+//            content += "            "+attachList.get(i).get("content")+" ";
+//            content += "     </tr>";
+//        }
+//        content +=   " </tbody>";
+//        content += "   </table>";
+//
+//        content += "</body>";
+//        content += "</html>";
         return getPdfDataFromHtml(content);
     }
 }

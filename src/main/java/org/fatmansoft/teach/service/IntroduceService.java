@@ -87,9 +87,24 @@ public class IntroduceService {
         data.put("overview", ov);  //学生基本信息综述
         List attachList = new ArrayList();
         Map m;
+
+
+        m = new HashMap();
+        m.put("title", "个人信息");
+        m.put("content", "姓名：" + s.getStudentName());
+        attachList.add(m);
+        m = new HashMap();
+        m.put("content", "年龄：" + s.getAge() + "; 性别：" + (s.getSex().equals("1")?"男":"女"));
+        attachList.add(m);
+
+
+        m = new HashMap();
+        attachList.add(m);
         m = new HashMap();
         m.put("title","学习成绩");
         m.put("content","绩点： " + s.getGPA());  // 学生成绩综述
+        attachList.add(m);
+        m = new HashMap();
         attachList.add(m);
         m = new HashMap();
         m.put("title","创新实践记录");
@@ -99,6 +114,8 @@ public class IntroduceService {
         }
         if(inno.equals("")){inno = "暂无";}
         m.put("content", inno);
+        attachList.add(m);
+        m = new HashMap();
         attachList.add(m);
         m = new HashMap();
         m.put("title","荣誉记录");

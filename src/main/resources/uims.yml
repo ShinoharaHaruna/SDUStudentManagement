@@ -409,8 +409,6 @@ uims:
           opers:
             - name: edit
             - name: delete
-            - name: logDetail
-              label: 详情
       query:
         - type: input
           prop: studentNum
