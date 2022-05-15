@@ -2,9 +2,7 @@ package org.fatmansoft.teach.models;
 
 import org.hibernate.validator.constraints.Range;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -16,9 +14,12 @@ import java.util.Date;
 public class Innovation {
     @Id
     private Integer id;
-    @NotBlank
-    @Size(max = 20)
-    private String studentNum;
+    @ManyToOne
+    @JoinColumn(name="student_num")
+    private Student student;
+//    @NotBlank
+//    @Size(max = 20)
+//    private String studentNum;
 
     @Range(min= 1, max = 6)
     private Integer innoType;
@@ -37,11 +38,13 @@ public class Innovation {
     }
 
     public String getStudentNum() {
-        return studentNum;
+//        return studentNum;
+        return student.getStudentNum();
     }
 
     public void setStudentNum(String studentNum) {
-        this.studentNum = studentNum;
+//        this.studentNum = studentNum;
+        student.setStudentNum(studentNum);
     }
 
     public Integer getInnoType() {

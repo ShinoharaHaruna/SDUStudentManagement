@@ -1261,7 +1261,9 @@ public class TeachController {
     }
     @PostMapping("/getStudentIntroducePdf")
     public ResponseEntity<StreamingResponseBody> getStudentIntroducePdf(Map dataRequest) {
+        System.out.println(dataRequest.toString());
         String s1 = CommonMethod.getString(dataRequest,"studentNum");
+        if(s1.equals("")) System.out.println("麻了");
         String s2 = studentRepository.findStudentListByNumName("").get(0).getStudentNum();
         String studentNum = (s1.equals(""))?s2:s1;
         Student s = studentRepository.findStudentListByNumName(studentNum).get(0);

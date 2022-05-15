@@ -17,11 +17,11 @@ public class Achievement {
     @Id
     private Integer id;
 
-//    @ManyToOne
-//    @JoinColumn(name="student_num")
-//    private Student student;
-    @NotBlank
-    private String studentNum;
+    @ManyToOne
+    @JoinColumn(name="student_num")
+    private Student student;
+//    @NotBlank
+//    private String studentNum;
 
     // 如第 7 行所声明
     @NotBlank
@@ -50,13 +50,13 @@ public class Achievement {
     }
 
     public String getStudentNum() {
-        return studentNum;
-//        return student.getStudentNum();
+//        return studentNum;
+        return student.getStudentNum();
     }
 
     public void setStudentNum(String studentNum) {
-        this.studentNum = studentNum;
-//        this.student.setStudentNum(studentNum);
+//        this.studentNum = studentNum;
+        this.student.setStudentNum(studentNum);
     }
 
     //    public Student getCourse() {
