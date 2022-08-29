@@ -1,0 +1,410 @@
+/*胡芮豪的前言        本人的所有注释会以H开头
+这个是整体界面的样式表，包括登陆前和登陆后
+1.每次改动后先保存后刷新方能生效
+2.对于字体颜色好像不止一种表达方法，rgb表达法为十进制，“#”开头的为十六进制
+3.对字体的更改需要字体存在，目前考虑的是本地的字体，后续可以考虑将字体文件添加在文件夹里：..\test-win32-x64\resources\app\fonts
+4.important表示优先级，可能会有覆盖的操作
+
+至于写注释的目的，最开始可能是为了忘记哪个板块对应哪一部分，后面干脆方便提示与更改，甚至作为翻译使用了*/
+
+*{/*H:使页面内容无法直接被鼠标光标选中，增加页面完整性*/
+    outline: none;
+    user-select: none;
+}
+
+#app
+{/*H:请输入学号的格式改动*/
+    font-family:Avenir,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    text-align:center;
+    font-size: 20px;
+    font-family:微软雅黑;/*H:对这里的字体改动好像会对登录界面后的所有的文字生效*//*H:后面有字体可以单独更改，不用在意*/
+    color:#3499e2
+}
+
+#nav{
+    padding:30px
+}
+#nav a{
+    font-weight:700;
+    color:#4268c9d0
+}
+#nav a.router-link-exact-active{
+    color:#512ca8
+}
+
+
+@supports(-webkit-mask:none) and (not (cater-color:#fff)){
+    .login-container .el-input input{
+        color:rgb(215, 32, 32)
+    }
+}
+.login-container .el-input{
+    display:inline-block;
+    height:47px;
+    width:85%
+}
+
+
+form{/*H:实现登陆界面毛玻璃圆角框效果*/
+    background-color: rgb(255, 255, 255, .3);
+    width: 400px;
+    height: 400px;
+    border-radius: 30px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    backdrop-filter: blur(3px);
+    border-left: 2px solid rgb(255, 255, 255, .3);
+    border-top: 2px solid rgb(255, 255, 255, .3);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, .2);
+    text-align: center;
+}
+
+
+.login-container .el-input input
+{/*H:登录输入相关格式*/
+    background:transparent;
+    border:0;
+    -webkit-appearance:none;
+    border-radius:0;
+    border-radius: 16px;
+    padding:12px 5px 12px 15px;
+    color:rgb(18, 147, 212);/*H:输入内容*/
+    font-size: 20px;
+    height:47px;
+    caret-color:rgb(44, 201, 240)/*H:光标*/
+}
+
+
+/*H:毛玻璃输入框效果*/
+input{
+    border: none;
+    width: 80%;
+    font-size: 22px;
+    padding: 10px;
+    margin-bottom: 32px;
+    border-radius: 16px;
+    background-color: transparent;
+
+    backdrop-filter: blur(3px);
+    border-left: 2px solid rgb(255, 255, 255, .3);
+    border-top: 2px solid rgb(255, 255, 255, .3);
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, .2);
+
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, .2);
+    font-family: 幼圆;
+    color: white;
+}
+
+::placeholder{
+    color: white;
+    opacity: 0.8;
+    
+}
+
+.btn{
+    width: 240px;
+    font-size: 30px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+input:focus{
+    border: none;
+    background-color: rgba(255,255,255, .1);
+
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, .2);
+    border-right: 2px solid rgb(255, 255, 255, .3);
+    border-bottom: 2px solid rgb(255, 255, 255, .3);
+    box-shadow:inset 2px 2px 2px rgba(0, 0, 0, .2);
+}
+
+
+.login-container[data-v-73d22ff6]
+{/*H:登录界面的背景格式*/
+    min-height:100%!important;/*H:此处是对窗口中的纵向显示的规定，建议不做任何更改，否则很难看*/
+    width:100%;/*H:同上，此为横向*/
+    /* background-color:#ffffff00; *//*H:之前存在的，改动时不太愿意直接删除*/
+    background-color: rgb(255, 255, 255);/*H:好像有显示图片的时候这个没啥用吧*/
+    background: url(background0201.png);/*H:图片，好像需要放在css文件夹下*/
+    background-repeat: no-repeat;/*H:表示图片是否重复，此处表示不重复，其中repea-x表示横重复，repeat-y表示纵重复*/
+    background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-position: center 0
+    /*overflow:hidden *//*H:之前存在的，表示为超出部分是否剪裁，hidden表示剪裁，visible表示不剪裁，默认为后者；感觉对于背景图片的显示来说没啥意义*/
+}
+
+
+/* .login-container .login-form[data-v-73d22ff6]{
+    position:relative;
+    width:520px;
+    max-width:100%;
+    padding:160px 35px 0;
+    margin:0 auto;
+    color: rgb(226, 59, 59);
+    overflow:hidden
+}
+.login-container .tips[data-v-73d22ff6]{
+    font-size:14px;
+    color:rgba(159, 43, 43, 0.762);
+    margin-bottom:10px
+}
+.login-container .tips span[data-v-73d22ff6]:first-of-type{
+    margin-right:16px
+} */
+/*H:原有的，未直接删除*/
+
+
+.login-container .svg-container[data-v-73d22ff6]
+{/*H:输入账号密码的图标格式*/
+    padding:6px 5px 6px 15px;
+    color:#2348c3be;
+    font-size: 28px;
+    vertical-align:middle;
+    /* position: relative;
+    top: 8px;
+    left: -6px; */
+    width:30px;
+    display:inline-block;
+}
+
+.login-container .title-container[data-v-73d22ff6]{
+    position:relative
+}
+
+h3{/*H:登陆界面顶上方的文字格式*/
+    border: none;
+    position: relative;
+    top: 6px;
+    font-size: 40px;
+    padding-bottom: 15px;
+    color: rgba(31, 64, 181, 0.771);
+    text-align: center;
+    font-weight: 400;
+    font-family: 华文行楷;
+}
+
+i{/*H:登录时账号密码图标的格式*/
+    position: relative;
+    top: 15px;
+    left: -8px;
+    font-size: 30px;
+    
+}
+
+.login-container .show-pwd[data-v-73d22ff6]
+{/*H:这个可能是切换密码显隐的那个小眼睛，不是很清楚*/
+    position:absolute;
+    right:10px;
+    top:7px;
+    font-size:16px;
+    color:#af2828;
+    cursor:pointer;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none
+}
+.login-container .thirdparty-button[data-v-73d22ff6]{
+    position:absolute;
+    right:0;
+    bottom:6px
+}
+@media only screen and (max-width:470px){
+    .login-container .thirdparty-button[data-v-73d22ff6]{
+        display:none
+    }
+}
+body{
+    margin:0
+}
+#app,body,html{
+    height:100%
+}
+html{
+    box-sizing:border-box
+}
+.navigation{
+    text-align:left;font-size:11px
+}
+.app-container,.form-inline-bottom{
+    padding:10px
+}
+.form-inline-query{
+    padding:0
+}
+.query-container{
+    font-size:10px;
+    text-align:center;
+    padding-bottom:5px
+}
+.query-container .el-button{
+    margin-bottom:2px!important;
+    padding-bottom:4px;
+    padding-top:4px;
+    padding-right:6px;
+    padding-left:6px;
+    text-align:center
+}
+.query-container .el-input__inner{
+    border:1px solid #f1ff27
+}
+.el-input{
+    line-height:30px
+}
+.el-input__inner{
+    height:30px;
+    line-height:30px;
+    position: relative;
+    top: 16px;
+}
+.el-input__icon{
+    line-height:30px;
+    position: relative;
+    top: 16px;
+}
+.form-div{
+    font-size:10px;
+    margin-left:30%;
+    margin-right:30%
+}
+.form-div1{
+    font-size:10px;
+    margin-left:10%;
+    margin-right:10%
+}
+.table-content{
+    font-size:10px;
+    margin-top:10px!important
+}
+.table-content .el-button{
+    font-size:18px;
+    font-family:微软雅黑
+}/*H:操作按钮*/
+.buttonCenter{
+    margin-top:5px;
+    display:flex;
+    justify-content:center
+}
+.buttonCenter .el-button{
+    margin-left:5px!important;
+    margin-bottom:5px!important
+}
+.editButton{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    line-height:20px
+}
+.editButton,.rowButton{
+    width:100px
+}
+
+.editButton,.longButton,.rowButton
+{/*H:管理页面的添加*/
+    background:#00b1e7;/*H:背景色*/
+    color:#fff;/*H:文字*/
+    border-radius:28px;
+    font-size:18px;
+    font-family:微软雅黑;
+    border:2px solid #00467e;/*H:边框*/
+    text-align:center;
+    height:50px
+}
+
+.longButton{/*H:尚未找出是啥*/
+    width:150px
+}
+.centerButton
+{/*H:跟添加按钮相关，不太明白的东西*/
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-top:20px
+}
+
+.commButton
+{/*H:查询按钮格式*/
+    background:#3fa582;/*H:背景色*/
+    border-radius:28px;
+    position: relative;
+    font-size:18px;
+    /* top: 85px;
+    left: 900px; */
+    border:2px solid #090;/*H:边框*/
+    width:100px
+}
+.commButton,.deleteButton
+{/*H:查询按钮文字*/
+    color:#fff;
+    font-family:微软雅黑;
+    text-align:center;
+    height:50px
+}/*H:学生管理页面*/
+
+.deleteButton
+{/*此处为更改登录后显示的退出登录按钮的格式*/
+    align-items:center;
+    background:#e2001a;
+    border-radius:28px;
+    font-size:15px;
+    border:2px solid #a00000;
+    width:200px;
+    line-height:20px
+}
+.deleteButton,.twoButton{
+    display:flex;
+    justify-content:center
+}
+.twoButton{
+    flex-direction:row
+}
+.el-table thead
+{/*H:此处为更改登录后界面中，每个表格上方类似于“序号”“姓名”等文字格式*/
+    color:rgb(0, 0, 0)!important;
+    font-weight:700!important;
+    font-size:14px
+}
+.el-table .cell{
+    word-break:keep-all
+}
+.el-table__row
+{/*H:此为每个表格内的内容的格式*/
+    color:#000!important;
+    font-size: 18px;
+}
+.el-form-item__label{
+    color:#000!important;
+    font-weight:700!important
+}
+.content{
+    width:60%;
+    border-top:1px solid #696969;
+    border-left:1px solid #696969;
+    border-spacing:0;
+    margin-top:5px;
+    margin-bottom:5px;
+    font-family:serif
+}
+.content tr{
+    font-family:serif;
+    width:100%!important;
+    color:#000!important;
+    font-weight:700!important
+}
+.content td{
+    font-family:serif;
+    padding:2px 2px;
+    border-bottom:1px solid #696969;
+    border-right:1px solid #696969;
+    text-align:center;font-size:14px
+}
+.table_center{
+    display:flex;
+    justify-content:center;
+    flex-direction:row
+}
